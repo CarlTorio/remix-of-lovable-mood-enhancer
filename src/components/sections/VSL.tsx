@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import hero from "@/assets/hero.jpg";
+
 import { Reveal } from "../Reveal";
 
 export function VSL() {
