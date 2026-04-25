@@ -72,7 +72,8 @@ const couplesBundles: Bundle[] = [
 ];
 
 function ShopPage() {
-  const { variant } = Route.useSearch();
+  const search = Route.useSearch();
+  const variant: Variant = search.variant ?? "her";
 
   return (
     <div className="min-h-screen bg-[var(--color-noir)] text-[var(--color-ivory)]">
