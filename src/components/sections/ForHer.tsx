@@ -21,7 +21,7 @@ export function ForHer() {
         {/* DRAMATIC BOTTLE STAGE */}
         <div className="relative overflow-hidden bg-gradient-to-br from-[var(--color-warm-noir)] via-[var(--color-noir)] to-black flex items-center justify-center min-h-[70vh] lg:min-h-0">
           <img
-            src={forher}
+            src={FOR_HER_IMAGE}
             alt=""
             aria-hidden
             loading="lazy"
