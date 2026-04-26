@@ -1,24 +1,25 @@
 import { useState } from "react";
-import maca from "@/assets/maca.jpg";
-import ginseng from "@/assets/ginseng.jpg";
-import tongkat from "@/assets/tongkat.jpg";
-import citrulline from "@/assets/citrulline.jpg";
-import magnesium from "@/assets/magnesium.jpg";
-import taurine from "@/assets/taurine.jpg";
-import b6 from "@/assets/b6.jpg";
 import { Reveal } from "../Reveal";
 
+const MACA_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Maca%20root%20(2).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9NYWNhIHJvb3QgKDIpLnBuZyIsImlhdCI6MTc3NzE4MzI0OCwiZXhwIjoxODA4NzE5MjQ4fQ.9IwEDDT8IOQnYfO9kAzKTAT2jJjjNGnI7dIOdquXh8Q";
+const GINSENG_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Panax%20Ginseng%20(2).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9QYW5heCBHaW5zZW5nICgyKS5wbmciLCJpYXQiOjE3NzcxODMyMjYsImV4cCI6MTgwODcxOTIyNn0.hQ9cXMPekLvRiNorfNuQtMSIW-wmqnujImCcwsgBjLY";
+const TONGKAT_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Tongkat%20Ali%20(2).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9Ub25na2F0IEFsaSAoMikucG5nIiwiaWF0IjoxNzc3MTgzMjAxLCJleHAiOjE4MDg3MTkyMDF9.OwK3TML6C-li3GrNnWxGK_ur_t78zM9DRCyxs6iIGpA";
+const CITRULLINE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/L-citrulline%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9MLWNpdHJ1bGxpbmUgKDMpLnBuZyIsImlhdCI6MTc3NzE4MzUzOSwiZXhwIjoxODA4NzE5NTM5fQ.SkCLOpUy6t6X8Caq4gpAK03R2QO4XDygkpPYs7H4ri8";
+const MAGNESIUM_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Magnesium%20Glycinate%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9NYWduZXNpdW0gR2x5Y2luYXRlICgzKS5wbmciLCJpYXQiOjE3NzcxODM0ODIsImV4cCI6MTgwODcxOTQ4Mn0.ngXdLU22A3MY-ZW24TWKlV45wMgLZikLBWjmQKi4VqI";
+const TAURINE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Taurine%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9UYXVyaW5lICgzKS5wbmciLCJpYXQiOjE3NzcxODM1MDgsImV4cCI6MTgwODcxOTUwOH0.W-WaAuPmoF0etLMZxgAraDTtTOl4rNDjLdOISG2KzJM";
+const B6_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Vitamin%20B6%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9WaXRhbWluIEI2ICgzKS5wbmciLCJpYXQiOjE3NzcxODM1MjIsImV4cCI6MTgwODcxOTUyMn0.0fjewp5ehBVAafXhhGaFPPV3NdXt1F1r4CAsZufX9uo";
+
 const him = [
-  { img: maca, name: "Maca Root", desc: "Boosts energy, stamina, and natural drive" },
-  { img: ginseng, name: "Panax Ginseng", desc: "Enhances endurance and mental clarity" },
-  { img: tongkat, name: "Tongkat Ali", desc: "Supports healthy testosterone levels naturally" },
+  { img: MACA_URL, name: "Maca Root", desc: "Boosts energy, stamina, and natural drive" },
+  { img: GINSENG_URL, name: "Panax Ginseng", desc: "Enhances endurance and mental clarity" },
+  { img: TONGKAT_URL, name: "Tongkat Ali", desc: "Supports healthy testosterone levels naturally" },
 ];
 
 const her = [
-  { img: citrulline, name: "L-Citrulline", desc: "Supports healthy blood flow and natural arousal" },
-  { img: magnesium, name: "Magnesium Glycinate", desc: "Calms stress, supports hormonal balance" },
-  { img: taurine, name: "Taurine", desc: "Boosts energy and emotional wellbeing" },
-  { img: b6, name: "Vitamin B6", desc: "Supports mood, energy, and hormonal health" },
+  { img: CITRULLINE_URL, name: "L-Citrulline", desc: "Supports healthy blood flow and natural arousal" },
+  { img: MAGNESIUM_URL, name: "Magnesium Glycinate", desc: "Calms stress, supports hormonal balance" },
+  { img: TAURINE_URL, name: "Taurine", desc: "Boosts energy and emotional wellbeing" },
+  { img: B6_URL, name: "Vitamin B6", desc: "Supports mood, energy, and hormonal health" },
 ];
 
 export function Ingredients() {
