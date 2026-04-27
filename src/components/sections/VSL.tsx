@@ -184,7 +184,7 @@ export function VSL() {
 
             {/* Custom controls bar */}
             {ready && (
-              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 translate-y-2 group-hover/vsl:opacity-100 group-hover/vsl:translate-y-0 focus-within:opacity-100 focus-within:translate-y-0 transition-all duration-300">
                 {/* Progress bar */}
                 <div className="relative h-1 mb-3 group">
                   <div className="absolute inset-0 rounded-full bg-white/25" />
