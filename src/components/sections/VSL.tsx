@@ -133,13 +133,14 @@ export function VSL() {
     }
   };
 
-  const restart = () => {
+  const restart = (e?: React.MouseEvent<HTMLButtonElement>) => {
     const p = playerRef.current;
     if (!p) return;
     p.seekTo(0, true);
     p.playVideo();
     setPlaying(true);
     setCurrent(0);
+    e?.currentTarget.blur();
   };
 
   const onSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
