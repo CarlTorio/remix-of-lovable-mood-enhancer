@@ -4,23 +4,28 @@ import bg2 from "@/assets/lifestyle7.jpg";
 import bg3 from "@/assets/lifestyle11.jpg";
 import { Reveal } from "../Reveal";
 
+const RED_IT = { color: "#DC2627", fontStyle: "italic" } as const;
+
 const testimonials = [
   {
     bg: bg1,
-    quote:
-      "By week 2, I felt like myself again. My husband noticed before I even said anything. It was like I came back to life.",
+    quote: (
+      <>By week 2, I felt like myself again. My husband noticed before I even said anything. It was like I <span style={RED_IT}>came back to life.</span></>
+    ),
     who: "Ana M., 38 · Manila",
   },
   {
     bg: bg2,
-    quote:
-      "The confidence came back quietly. She started looking at me differently. Best decision I've made in years.",
+    quote: (
+      <>The confidence came back quietly. She started looking at me differently. <span style={RED_IT}>Best decision I've made in years.</span></>
+    ),
     who: "Carlo R., 44 · Cebu",
   },
   {
     bg: bg3,
-    quote:
-      "We laugh again. We talk again. LOVABLE gave us back something we honestly thought was gone for good.",
+    quote: (
+      <>We laugh again. We talk again. LOVABLE gave us back <span style={RED_IT}>something we honestly thought was gone for good.</span></>
+    ),
     who: "Jasmine & Paolo · Davao",
   },
 ];
