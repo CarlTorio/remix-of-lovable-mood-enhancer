@@ -160,10 +160,10 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="her"
             eyebrow="LOVABLE Drops For Her"
-            title="Lovable Drops For Women"
+            title={<>Mood Enhancer Drops <span style={{ color: "#DC2627", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
             reviews="1,200+"
-            description="Formulated with clinically-studied amino acids and vitamins. Supports natural arousal, mood balance, and intimate wellness, safely and naturally."
+            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span> — safely and naturally.</>}
             mainImage={forher}
             thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
             bundles={herBundles}
@@ -181,10 +181,10 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="him"
             eyebrow="LOVABLE Drops For Him"
-            title="Lovable Drops For Men"
+            title={<>Mood Enhancer Drops <span style={{ color: "#DC2627", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
-            description="Powered by Maca Root, Panax Ginseng, and Tongkat Ali. Supports stamina, natural testosterone, circulation, and the confidence to show up fully every time."
+            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span> — every time.</>}
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
@@ -241,10 +241,10 @@ function ProductDetail({
   faq,
 }: {
   eyebrow: string;
-  title: string;
+  title: React.ReactNode;
   rating: string;
   reviews: string;
-  description: string;
+  description: React.ReactNode;
   mainImage: string;
   thumbnails: string[];
   bundles: Bundle[];
