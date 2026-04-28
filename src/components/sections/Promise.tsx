@@ -1,11 +1,13 @@
 import { Reveal } from "../Reveal";
 
+const RED = { color: "#DC2627", fontWeight: 600 } as const;
+
 const promises = [
-  { icon: "🌿", title: "Chemical-Free, Without Pressure", desc: "No synthetic drugs. Just pure botanicals that work with your body." },
-  { icon: "💯", title: "Results You'll Feel — Or You Don't Pay", desc: "30-day full money-back guarantee. No questions asked." },
-  { icon: "🔬", title: "Completely Natural. Works Naturally", desc: "Formulated to work with your body, never against it." },
-  { icon: "❤️", title: "Stronger Relationships. Real Intimacy", desc: "Supporting your connection, not just a symptom." },
-  { icon: "🌟", title: "Supporting the WHOLE You", desc: "Mind, body, energy, and confidence. Not just one thing." },
+  { icon: "🌿", title: <>Chemical-Free, Without Pressure</>, desc: "No synthetic drugs. Just pure botanicals that work with your body." },
+  { icon: "💯", title: <>Results You'll Feel — <span style={RED}>Or You Don't Pay</span></>, desc: "30-day full money-back guarantee. No questions asked." },
+  { icon: "🔬", title: <>Completely Natural. <span style={RED}>Works Naturally.</span></>, desc: "Formulated to work with your body, never against it." },
+  { icon: "❤️", title: <>Stronger Relationships. <span style={RED}>Real Intimacy.</span></>, desc: "Supporting your connection, not just a symptom." },
+  { icon: "🌟", title: <>Supporting the WHOLE You</>, desc: "Mind, body, energy, and confidence. Not just one thing." },
 ];
 
 export function Promise() {
