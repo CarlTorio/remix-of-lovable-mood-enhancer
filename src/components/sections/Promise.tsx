@@ -19,7 +19,7 @@ export function Promise() {
           <div className="text-center mb-16">
             <p className="eyebrow mb-5">The LOVABLE Promise</p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[44px] leading-[1.15]">
-              We Stand Behind Every Drop
+              We Stand Behind <span style={{ color: "#B8955A", fontStyle: "italic" }}>Every Drop.</span>
             </h2>
           </div>
         </Reveal>
