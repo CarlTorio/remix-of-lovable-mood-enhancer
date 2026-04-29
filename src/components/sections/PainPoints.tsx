@@ -166,20 +166,17 @@ export function PainPoints() {
           <div
             className={isMobile ? "flex flex-col" : "flex flex-row"}
             style={{
-              gap: "1px",
-              borderRadius: "12px",
-              overflow: "hidden",
-              maxWidth: "1200px",
+              gap: "8px",
+              maxWidth: "1400px",
               margin: "0 auto",
               height: isMobile ? "auto" : isTablet ? "380px" : "420px",
-              background: "rgba(184, 149, 90, 0.18)",
             }}
           >
             {panels.map((p, i) => {
               const isActive = active === i;
               const isHover = hovered === i;
               const flex = isActive ? 4 : 1;
-              const mobileHeight = isActive ? "280px" : "100px";
+              const mobileHeight = isActive ? "400px" : "200px";
 
               const imageFilter = isActive
                 ? "brightness(1.22) contrast(1.15) saturate(1.05)"
@@ -191,8 +188,12 @@ export function PainPoints() {
                 isHover && !isActive ? "scale(1.02)" : "scale(1)";
 
               const border = isActive
-                ? "1px solid rgba(220, 38, 39, 0.25)"
-                : "1px solid rgba(242, 234, 224, 0.06)";
+                ? "1px solid rgba(220, 38, 39, 0.3)"
+                : "1px solid rgba(242, 234, 224, 0.08)";
+
+              const boxShadow = isActive
+                ? "0 8px 32px rgba(0,0,0,0.4), 0 12px 48px rgba(220,38,39,0.12)"
+                : "0 8px 32px rgba(0,0,0,0.4)";
 
               return (
                 <div
@@ -210,10 +211,12 @@ export function PainPoints() {
                     flex: isMobile ? "0 0 auto" : flex,
                     height: isMobile ? mobileHeight : "100%",
                     width: isMobile ? "100%" : "auto",
-                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}`,
+                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}, box-shadow 500ms ${EASE}`,
                     minWidth: 0,
                     background: "#1A0A0A",
                     border,
+                    borderRadius: "16px",
+                    boxShadow,
                   }}
                 >
                   {/* Background image */}
