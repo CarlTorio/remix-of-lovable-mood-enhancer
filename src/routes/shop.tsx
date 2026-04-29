@@ -333,7 +333,7 @@ function ProductDetail({
                 onClick={() => setSelected(b.id)}
                 className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
                   isSelected ? "bg-white/[0.04]" : "bg-transparent"
-                } p-5 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
+                } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
               >
                 <span
                   className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
