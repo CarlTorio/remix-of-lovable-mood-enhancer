@@ -30,7 +30,7 @@ const panels: Panel[] = [
     number: "02",
     label: "Distance",
     quote:
-      "The distance in bed feels <span style='color:#DC2627; font-style:italic;'>wider every night</span> — and neither of you knows how to close it.",
+      "The distance in bed feels <span style='color:#DC2627; font-style:italic;'>wider every night</span>, and neither of you knows how to close it.",
     description: "Same bed. Same house. But miles between you.",
   },
   {
