@@ -52,7 +52,7 @@ const panels: Panel[] = [
     label: "Drained",
     quote:
       "Stress and the years have <span style='color:#DC2627; font-style:italic;'>quietly drained</span> the energy you used to share.",
-    description: "Your body remembers — but your energy doesn't keep up anymore.",
+    description: "Your body remembers. But your energy doesn't keep up anymore.",
   },
   {
     image:
