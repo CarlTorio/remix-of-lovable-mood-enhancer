@@ -73,7 +73,7 @@ const panels: Panel[] = [
     quote:
       "Neither of you talks about it. <span style='color:#DC2627; font-style:italic;'>But you both feel it.</span>",
     description:
-      "An unspoken weight. You miss each other — even in the same room.",
+      "An unspoken weight. You miss each other, even in the same room.",
   },
 ];
 
