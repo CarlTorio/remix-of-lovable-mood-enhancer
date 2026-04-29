@@ -162,7 +162,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="her"
             eyebrow="LOVABLE Drops For Her"
-            title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
+            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
             reviews="1,200+"
             description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
@@ -183,7 +183,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="him"
             eyebrow="LOVABLE Drops For Him"
-            title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
+            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
             description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span>, every time.</>}
