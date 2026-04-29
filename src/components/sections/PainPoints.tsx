@@ -42,7 +42,7 @@ export function PainPoints() {
                 fontWeight: 600,
                 letterSpacing: "3px",
                 textTransform: "uppercase",
-                color: "#DC2627",
+                color: "#A81716",
                 marginBottom: "16px",
               }}
             >
@@ -59,7 +59,7 @@ export function PainPoints() {
               }}
             >
               You Love Each Other. But Something Feels...{" "}
-              <span style={{ color: "#DC2627", fontStyle: "italic" }}>Different.</span>
+              <span style={{ color: "#A81716", fontStyle: "italic" }}>Different.</span>
             </h2>
           </div>
         </Reveal>
@@ -106,7 +106,7 @@ export function PainPoints() {
                       fontStyle: "italic",
                       fontSize: "16px",
                       fontWeight: 700,
-                      color: "#DC2627",
+                      color: "#A81716",
                     }}
                   >
                     {c.number}
@@ -158,7 +158,7 @@ export function PainPoints() {
               to="/shop"
               className="inline-block"
               style={{
-                background: "#DC2627",
+                background: "#A81716",
                 color: "#FFFFFF",
                 padding: "16px 38px",
                 borderRadius: "8px",
@@ -171,11 +171,11 @@ export function PainPoints() {
                 transition: "background 0.3s ease, transform 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#B8221F";
+                e.currentTarget.style.background = "#8A1212";
                 e.currentTarget.style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#DC2627";
+                e.currentTarget.style.background = "#A81716";
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >
@@ -192,8 +192,8 @@ export function PainPoints() {
               }}
             >
               30-Day Money Back{" "}
-              <span style={{ color: "#DC2627" }}>•</span> 1,200+ Filipino Couples{" "}
-              <span style={{ color: "#DC2627" }}>•</span> Discreet Shipping
+              <span style={{ color: "#A81716" }}>•</span> 1,200+ Filipino Couples{" "}
+              <span style={{ color: "#A81716" }}>•</span> Discreet Shipping
             </p>
           </div>
         </Reveal>

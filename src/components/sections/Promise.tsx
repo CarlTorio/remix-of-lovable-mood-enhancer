@@ -1,6 +1,6 @@
 import { Reveal } from "../Reveal";
 
-const RED = { color: "#DC2627", fontWeight: 600 } as const;
+const RED = { color: "#A81716", fontWeight: 600 } as const;
 
 const promises = [
   { icon: "🌿", title: <>Chemical-Free, Without Pressure</>, desc: "No synthetic drugs. Just pure botanicals that work with your body." },

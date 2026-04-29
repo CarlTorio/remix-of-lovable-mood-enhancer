@@ -50,7 +50,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="text-display text-[var(--color-ivory)] text-[36px] sm:text-5xl md:text-[56px] lg:text-[64px] leading-[1.05]">
-              What If You Could Feel That Deep, <span style={{ color: "#DC2627", fontStyle: "italic" }}>Unshakable Connection</span> Again?
+              What If You Could Feel That Deep, <span style={{ color: "#A81716", fontStyle: "italic" }}>Unshakable Connection</span> Again?
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
@@ -62,7 +62,7 @@ export function Hero() {
             <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start md:justify-start justify-center gap-5 sm:gap-6">
               <a
                 href="/shop"
-                className="inline-block bg-[#DC2627] text-white hover:bg-[#b8201f] transition-colors"
+                className="inline-block bg-[#A81716] text-white hover:bg-[#8a1212] transition-colors"
                 style={{
                   padding: "15px 36px",
                   borderRadius: "8px",
@@ -77,7 +77,7 @@ export function Hero() {
               </a>
               <div className="flex flex-col items-center sm:items-start">
                 <div className="flex items-center gap-2">
-                  <span style={{ color: "#DC2627", fontSize: "13px", letterSpacing: "1px" }}>★★★★★</span>
+                  <span style={{ color: "#A81716", fontSize: "13px", letterSpacing: "1px" }}>★★★★★</span>
                   <span style={{ color: "#F2EAE0", fontWeight: 600, fontSize: "13px" }}>4.9</span>
                 </div>
                 <p style={{ color: "#9A8880", fontSize: "10px", marginTop: "2px" }}>
@@ -96,7 +96,7 @@ export function Hero() {
                       width: "14px",
                       height: "14px",
                       borderRadius: "9999px",
-                      background: "#DC2627",
+                      background: "#A81716",
                       display: "inline-block",
                     }}
                   />

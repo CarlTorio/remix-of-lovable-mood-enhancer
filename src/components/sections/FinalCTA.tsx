@@ -13,7 +13,7 @@ export function FinalCTA() {
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center py-24">
         <Reveal>
           <h2 className="text-display text-[var(--color-ivory)] text-4xl sm:text-5xl md:text-[60px] leading-[1.05]">
-            Ready to Feel Like <span style={{ color: "#DC2627", fontStyle: "italic" }}>Yourselves</span> Again?
+            Ready to Feel Like <span style={{ color: "#A81716", fontStyle: "italic" }}>Yourselves</span> Again?
           </h2>
         </Reveal>
         <Reveal delay={0.1}>

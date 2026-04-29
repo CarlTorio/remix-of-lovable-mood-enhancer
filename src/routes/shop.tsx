@@ -108,7 +108,7 @@ function ShopHero() {
         </Reveal>
         <Reveal delay={0.1}>
           <h1 className="text-display text-[var(--color-ivory)] text-3xl sm:text-4xl md:text-[48px] leading-[1.1]">
-            Start Your Journey <span style={{ color: "#DC2627", fontStyle: "italic" }}>Back to Each Other</span>
+            Start Your Journey <span style={{ color: "#A81716", fontStyle: "italic" }}>Back to Each Other</span>
           </h1>
         </Reveal>
         <Reveal delay={0.2}>
@@ -160,7 +160,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="her"
             eyebrow="LOVABLE Drops For Her"
-            title={<>Mood Enhancer Drops <span style={{ color: "#DC2627", fontStyle: "italic" }}>For Women</span></>}
+            title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
             reviews="1,200+"
             description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span> — safely and naturally.</>}
@@ -181,7 +181,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="him"
             eyebrow="LOVABLE Drops For Him"
-            title={<>Mood Enhancer Drops <span style={{ color: "#DC2627", fontStyle: "italic" }}>For Men</span></>}
+            title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
             description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span> — every time.</>}
@@ -420,7 +420,7 @@ function CouplesBundle() {
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-[var(--color-noir)]/40 to-transparent" />
           <div className="absolute inset-0 flex items-end justify-center p-8">
             <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[40px] text-center leading-[1.1]">
-              The Complete <span style={{ color: "#DC2627", fontStyle: "italic" }}>Couples Bundle</span>
+              The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
             </h2>
           </div>
         </div>
@@ -553,7 +553,7 @@ function GuaranteeUrgency() {
               <ShieldCheck size={32} />
             </div>
             <h3 className="text-display text-[var(--color-ivory)] text-2xl sm:text-3xl md:text-[32px] leading-[1.15] max-w-md">
-              Try LOVABLE <span style={{ color: "#DC2627", fontStyle: "italic" }}>Risk-Free</span> for 30 Days
+              Try LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>Risk-Free</span> for 30 Days
             </h3>
             <p className="mt-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.85] max-w-md">
               Not satisfied? Return within 30 days for a full refund — no questions, no hassle.
@@ -707,7 +707,7 @@ function FinalShopCTA() {
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center py-24">
         <Reveal>
           <h2 className="text-display text-[var(--color-ivory)] text-4xl sm:text-5xl md:text-[52px] leading-[1.05]">
-            You've Read Enough. <span style={{ color: "#DC2627", fontStyle: "italic" }}>Now Feel It.</span>
+            You've Read Enough. <span style={{ color: "#A81716", fontStyle: "italic" }}>Now Feel It.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>

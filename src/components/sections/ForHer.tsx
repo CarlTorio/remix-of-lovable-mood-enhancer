@@ -59,7 +59,7 @@ export function ForHer() {
           <Reveal>
             <p className="eyebrow mb-5">For Her</p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[48px] leading-[1.15] max-w-md">
-              Feel <span style={{ color: "#DC2627", fontStyle: "italic" }}>Balanced, Vibrant,</span> and Alive Again.
+              Feel <span style={{ color: "#A81716", fontStyle: "italic" }}>Balanced, Vibrant,</span> and Alive Again.
             </h2>
             <span className="red-rule mt-7 mb-7" />
             <p className="text-[var(--color-ivory-muted)] text-[16px] leading-[1.9] max-w-md">
