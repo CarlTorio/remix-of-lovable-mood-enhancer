@@ -137,9 +137,9 @@ function ProductTabs({ initial }: { initial: Variant }) {
   ];
 
   return (
-    <section className="bg-[var(--color-noir)] py-16 md:py-20">
+    <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 md:mb-10">
           {tabs.map((t) => {
             const active = tab === t.id;
             return (
