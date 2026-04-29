@@ -653,7 +653,7 @@ function StockBar({ label, filled, text }: { label: string; filled: number; text
 function HowToOrder() {
   const steps = [
     { icon: "🛒", text: "Choose your bundle" },
-    { icon: "💳", text: "Checkout — GCash, Maya, Card, or COD" },
+    { icon: "💳", text: "Checkout via GCash, Maya, Card, or COD" },
     { icon: "📦", text: "We ship within 24-48 hours" },
     { icon: "❤️", text: "Receive in 2-5 days. Feel the difference." },
   ];
