@@ -288,7 +288,7 @@ function ProductDetail({
         </div>
       </Reveal>
 
-      {/* RIGHT — details */}
+      {/* RIGHT: details */}
       <Reveal delay={0.1}>
         <p className="eyebrow mb-4">{eyebrow}</p>
         <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[36px] leading-[1.15]">
