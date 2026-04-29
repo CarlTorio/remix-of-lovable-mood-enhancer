@@ -161,10 +161,11 @@ export function VSL() {
             <div className="aspect-video lg:aspect-auto w-full h-full relative overflow-hidden">
               <div
                 ref={containerRef}
-                className="pointer-events-none [&>iframe]:absolute [&>iframe]:top-1/2 [&>iframe]:left-1/2 [&>iframe]:-translate-x-1/2 [&>iframe]:-translate-y-1/2 [&>iframe]:block [&>iframe]:w-[max(100%,calc(100%*16/9*9/16))] [&>iframe]:h-[max(100%,calc(100%*16/9))] [&>iframe]:min-w-full [&>iframe]:min-h-full"
+                className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
                 style={{
-                  position: "absolute",
-                  inset: 0,
+                  width: "max(100%, calc(100% * 16 / 9))",
+                  height: "max(100%, calc(100% * 9 / 16))",
+                  aspectRatio: "16 / 9",
                 }}
               />
 
