@@ -399,6 +399,44 @@ function ProductDetail({
   );
 }
 
+function GalleryArrows({
+  images,
+  active,
+  setActive,
+}: {
+  images: string[];
+  active: string;
+  setActive: (s: string) => void;
+}) {
+  const idx = Math.max(0, images.indexOf(active));
+  const go = (dir: -1 | 1) => {
+    const next = (idx + dir + images.length) % images.length;
+    setActive(images[next]);
+  };
+  const btn =
+    "absolute top-1/2 -translate-y-1/2 z-10 h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/95 hover:bg-white text-[var(--color-noir)] flex items-center justify-center shadow-lg transition-all";
+  return (
+    <>
+      <button
+        type="button"
+        aria-label="Previous image"
+        onClick={() => go(-1)}
+        className={`${btn} left-2 sm:left-3`}
+      >
+        <ChevronLeft size={20} />
+      </button>
+      <button
+        type="button"
+        aria-label="Next image"
+        onClick={() => go(1)}
+        className={`${btn} right-2 sm:right-3`}
+      >
+        <ChevronRight size={20} />
+      </button>
+    </>
+  );
+}
+
 function MiniFaq({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
