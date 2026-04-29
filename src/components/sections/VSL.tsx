@@ -275,7 +275,7 @@ export function VSL() {
           <div>
             <p className="eyebrow mb-5">Watch This First</p>
             <h2 className="text-display text-[var(--color-ivory)] leading-[1.1] text-3xl md:text-4xl lg:text-5xl">
-              When Was the Last Time You Truly Felt… <span style={{ color: "#DC2627", fontStyle: "italic" }}>Connected?</span>
+              When Was the Last Time You Truly Felt… <span style={{ color: "#A81716", fontStyle: "italic" }}>Connected?</span>
             </h2>
             <p className="mt-5 text-[var(--color-ivory-muted)] max-w-xl text-base md:text-lg leading-relaxed">
               Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most <span style={{ color: "#F2EAE0", fontWeight: 600 }}>honest conversation about intimacy</span> you've heard in years.

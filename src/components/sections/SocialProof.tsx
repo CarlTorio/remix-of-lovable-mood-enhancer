@@ -4,7 +4,7 @@ import bg2 from "@/assets/lifestyle7.jpg";
 import bg3 from "@/assets/lifestyle11.jpg";
 import { Reveal } from "../Reveal";
 
-const RED_IT = { color: "#DC2627", fontStyle: "italic" } as const;
+const RED_IT = { color: "#A81716", fontStyle: "italic" } as const;
 
 const testimonials = [
   {

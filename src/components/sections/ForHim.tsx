@@ -31,7 +31,7 @@ export function ForHim() {
           <Reveal>
             <p className="eyebrow mb-5">For Him</p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[48px] leading-[1.15] max-w-md">
-              Bring Back the <span style={{ color: "#DC2627", fontStyle: "italic" }}>Fire.</span> Reclaim Your <span style={{ color: "#DC2627", fontStyle: "italic" }}>Confidence.</span>
+              Bring Back the <span style={{ color: "#A81716", fontStyle: "italic" }}>Fire.</span> Reclaim Your <span style={{ color: "#A81716", fontStyle: "italic" }}>Confidence.</span>
             </h2>
             <span className="red-rule mt-7 mb-7" />
             <p className="text-[var(--color-ivory-muted)] text-[16px] leading-[1.9] max-w-md">
