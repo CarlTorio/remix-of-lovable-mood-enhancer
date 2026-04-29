@@ -137,9 +137,9 @@ function ProductTabs({ initial }: { initial: Variant }) {
   ];
 
   return (
-    <section className="bg-[var(--color-noir)] py-16 md:py-20">
+    <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 md:mb-10">
           {tabs.map((t) => {
             const active = tab === t.id;
             return (
@@ -267,13 +267,26 @@ function ProductDetail({
   const selectedBundle = bundles.find((b) => b.id === selected) ?? defaultBundle;
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[55fr_45fr] items-start">
+    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
       {/* LEFT: image gallery */}
       <Reveal>
-        <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-[var(--color-warm-noir)] aspect-[4/5]">
-          <img src={active} alt="" loading="lazy" className="h-full w-full object-cover" />
+        <div
+          className="relative w-full aspect-square mx-auto overflow-hidden bg-[var(--color-warm-noir)]"
+          style={{
+            maxWidth: 560,
+            borderRadius: 14,
+            border: "0.5px solid rgba(184, 149, 90, 0.22)",
+          }}
+        >
+          <img
+            src={active}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: "center" }}
+          />
         </div>
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-3 grid grid-cols-3 gap-3" style={{ maxWidth: 560 }}>
           {thumbnails.slice(1, 4).map((thumb, i) => (
             <button
               key={i}
@@ -290,20 +303,20 @@ function ProductDetail({
 
       {/* RIGHT: details */}
       <Reveal delay={0.1}>
-        <p className="eyebrow mb-4">{eyebrow}</p>
-        <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[36px] leading-[1.15]">
+        <p className="eyebrow mb-3">{eyebrow}</p>
+        <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
           {title}
         </h2>
-        <div className="mt-4 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
+        <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
           <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
           <span>{rating} · {reviews} reviews</span>
         </div>
-        <p className="mt-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.85]">
+        <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
           {description}
         </p>
 
         {/* Bundles */}
-        <div className="mt-8 space-y-3">
+        <div className="mt-6 space-y-3">
           {bundles.map((b) => {
             const isSelected = selected === b.id;
             const borderClass =
@@ -320,7 +333,7 @@ function ProductDetail({
                 onClick={() => setSelected(b.id)}
                 className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
                   isSelected ? "bg-white/[0.04]" : "bg-transparent"
-                } p-5 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
+                } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
               >
                 <span
                   className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
