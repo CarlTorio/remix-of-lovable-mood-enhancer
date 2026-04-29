@@ -159,7 +159,14 @@ export function VSL() {
         <Reveal className="self-stretch h-full min-h-[260px] [&>*]:h-full">
           <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] h-full w-full" style={{ background: "transparent" }}>
             <div className="aspect-video lg:aspect-auto w-full h-full relative overflow-hidden">
-              <div ref={containerRef} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full h-full min-w-[177.78%] min-h-[100%] lg:min-w-[177.78%] [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:block" style={{ aspectRatio: "16/9" }} />
+              <div
+                ref={containerRef}
+                className="pointer-events-none [&>iframe]:absolute [&>iframe]:top-1/2 [&>iframe]:left-1/2 [&>iframe]:-translate-x-1/2 [&>iframe]:-translate-y-1/2 [&>iframe]:block [&>iframe]:w-[max(100%,calc(100%*16/9*9/16))] [&>iframe]:h-[max(100%,calc(100%*16/9))] [&>iframe]:min-w-full [&>iframe]:min-h-full"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                }}
+              />
 
               {/* Tap-to-unmute overlay */}
               {ready && muted && (
