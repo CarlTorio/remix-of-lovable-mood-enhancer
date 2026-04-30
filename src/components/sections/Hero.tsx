@@ -195,8 +195,8 @@ export function Hero() {
                   />
                   For when comfort isn't enough.
                 </span>
-                <a href="/shop" className="btn-primary btn-mobile-block">
-                  Shop Now →
+                <a href="/shop" className="btn-pulse-shine btn-mobile-block">
+                  <span>Shop Now</span> <span className="arrow">→</span>
                 </a>
               </div>
               <div className="flex flex-col items-center sm:items-start">
