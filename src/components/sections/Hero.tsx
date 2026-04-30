@@ -35,7 +35,13 @@ export function Hero() {
       />
       <HeroFX />
       {/* Mobile: image on top (40vh). Desktop: right side 50% */}
-      <div className="order-1 md:order-2 relative w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-10">
+      <div
+        className="order-1 md:order-2 relative w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-10"
+        style={{
+          boxShadow:
+            "0 24px 64px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.4)",
+        }}
+      >
         <img
           src={HERO_IMAGE_URL}
           alt="Filipino couple in tender embrace"
