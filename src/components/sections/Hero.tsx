@@ -46,25 +46,89 @@ export function Hero() {
 
       {/* Left side: text content */}
       <div className="order-2 md:order-1 relative z-10 w-full md:w-1/2 flex items-center justify-center px-6 py-16 md:py-28 md:min-h-[100svh]">
-        <div className="max-w-xl w-full text-center md:text-left">
+        <div className="max-w-xl w-full text-left">
           <Reveal>
-            <p className="eyebrow mb-6">Natural Lovable Drops</p>
+            <p
+              className="uppercase mb-6"
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "11px",
+                letterSpacing: "4px",
+                color: "#DC2627",
+                fontWeight: 600,
+              }}
+            >
+              Natural Lovable Drops
+            </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="text-display text-[var(--color-ivory)] text-[36px] sm:text-5xl md:text-[56px] lg:text-[64px] leading-[1.05]">
-              What If You Could Feel That Deep, <span style={{ color: "#A81716", fontStyle: "italic" }}>Unshakable Connection</span> Again?
+            <h1
+              className="text-[44px] md:text-[56px] lg:text-[72px]"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                color: "#F2EAE0",
+                lineHeight: 1.05,
+                fontWeight: 400,
+                letterSpacing: "-0.025em",
+                marginBottom: "24px",
+              }}
+            >
+              Feel That{" "}
+              <span style={{ color: "#DC2627", fontStyle: "italic" }}>Hunger</span>{" "}
+              Again.
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="mt-7 text-base sm:text-lg text-[var(--color-ivory)]/75 leading-relaxed">
-              The natural way thousands of Filipino couples are <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quietly reigniting</span> what time tried to take away.
+            <p
+              className="text-[17px] md:text-[20px] lg:text-[22px]"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontStyle: "italic",
+                color: "rgba(242, 234, 224, 0.78)",
+                lineHeight: 1.5,
+                maxWidth: "540px",
+                marginBottom: "36px",
+              }}
+            >
+              A natural blend for couples ready to want each other like the{" "}
+              <span style={{ color: "#B8955A", fontStyle: "normal", fontWeight: 400 }}>
+                first time
+              </span>
+              .
             </p>
           </Reveal>
           <Reveal delay={0.3}>
-            <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start md:justify-start justify-center gap-5 sm:gap-6">
-              <a href="/shop" className="btn-primary">
-                Shop Now →
-              </a>
+            <div className="flex flex-col items-start gap-5 sm:gap-6">
+              <div className="flex flex-col items-start">
+                <span
+                  className="uppercase"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "11px",
+                    letterSpacing: "2.5px",
+                    color: "#B8955A",
+                    marginBottom: "16px",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    style={{
+                      width: "4px",
+                      height: "4px",
+                      borderRadius: "9999px",
+                      background: "#DC2627",
+                      display: "inline-block",
+                    }}
+                  />
+                  For when comfort isn't enough.
+                </span>
+                <a href="/shop" className="btn-primary">
+                  Shop Now →
+                </a>
+              </div>
               <div className="flex flex-col items-center sm:items-start">
                 <div className="flex items-center gap-2">
                   <span style={{ color: "#F5C518", fontSize: "13px", letterSpacing: "1px" }}>★★★★<span style={{ color: "#F5C518", opacity: 0.4 }}>★</span></span>
