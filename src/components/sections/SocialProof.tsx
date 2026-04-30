@@ -142,7 +142,65 @@ export function SocialProof() {
         }
         .sp-fade { animation: sp-fade-in 500ms ease-out; }
         .sp-thumbs::-webkit-scrollbar { display: none; }
-        .sp-thumbs { scrollbar-width: none; }
+        .sp-thumbs { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+
+        /* Mobile-first stacking for the featured story */
+        .sp-featured { display: block; }
+        .sp-image { aspect-ratio: 16 / 9; border-radius: 12px; margin-bottom: 24px; }
+        .sp-badge {
+          top: 12px; left: 12px;
+          padding: 4px 10px;
+          font-size: 8px;
+          letter-spacing: 2px;
+          box-shadow: 0 2px 8px rgba(220, 38, 39, 0.3);
+        }
+        .sp-content { padding: 0 4px; margin-top: 0; }
+        .sp-quote-mark { font-size: 32px; margin-bottom: 12px; }
+        .sp-quote { font-size: 22px; line-height: 1.4; margin-bottom: 24px; padding: 0; }
+        .sp-divider { width: 40px; margin-bottom: 16px; }
+        .sp-name { font-size: 13px; font-weight: 500; }
+        .sp-verified {
+          display: flex !important;
+          margin-top: 6px;
+          font-size: 9px;
+          letter-spacing: 1.5px;
+        }
+        .sp-progress-wrap { display: none; }
+        .sp-cta-wrap { margin-top: 40px !important; }
+        .sp-cta-pre { font-size: 11px !important; }
+        .sp-cta-btn { width: 100%; min-height: 52px; }
+
+        @media (min-width: 768px) {
+          .sp-featured {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 48px;
+            align-items: center;
+          }
+          .sp-image { aspect-ratio: 16 / 9; border-radius: 14px; margin-bottom: 0; }
+          .sp-badge {
+            top: 16px; left: 16px;
+            padding: 6px 14px;
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            box-shadow: 0 4px 12px rgba(220, 38, 39, 0.3);
+          }
+          .sp-content { padding: 0; margin-top: 0; }
+          .sp-quote-mark { font-size: 48px; margin-bottom: 16px; }
+          .sp-quote { font-size: 26px; line-height: 1.5; margin-bottom: 32px; }
+          .sp-divider { width: 60px; margin-bottom: 20px; }
+          .sp-name { font-size: 14px; }
+          .sp-verified {
+            display: inline-flex !important;
+            margin-top: 0;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+          }
+          .sp-progress-wrap { display: block; }
+          .sp-cta-wrap { margin-top: 64px !important; }
+          .sp-cta-pre { font-size: 12px !important; }
+          .sp-cta-btn { width: auto; min-height: auto; }
+        }
       `}</style>
 
       <div className="mx-auto max-w-[1200px] px-6 text-center">
