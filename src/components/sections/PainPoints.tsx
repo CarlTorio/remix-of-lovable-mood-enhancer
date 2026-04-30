@@ -300,13 +300,14 @@ export function PainPoints() {
                         : "translateX(-50%)",
                       fontFamily: "'Playfair Display', serif",
                       fontStyle: "italic",
-                      fontSize: "24px",
+                      fontSize: "28px",
                       fontWeight: 700,
                       color: "#DC2627",
                       textShadow: isActive
-                        ? "none"
-                        : "0 0 16px rgba(220, 38, 39, 0.5)",
+                        ? "0 2px 8px rgba(0, 0, 0, 0.6)"
+                        : "0 0 24px rgba(220, 38, 39, 0.6), 0 0 8px rgba(220, 38, 39, 0.4), 0 2px 8px rgba(0, 0, 0, 0.6)",
                       transition: `all 500ms ${EASE}`,
+                      zIndex: 5,
                     }}
                   >
                     {p.number}
@@ -323,14 +324,16 @@ export function PainPoints() {
                         transformOrigin: "center",
                         fontFamily: "Montserrat, sans-serif",
                         fontSize: "11px",
-                        fontWeight: 600,
-                        letterSpacing: "0.3em",
+                        fontWeight: 500,
+                        letterSpacing: "0.4em",
                         textTransform: "uppercase",
-                        color: "rgba(242,234,224,0.65)",
+                        color: "rgba(184, 149, 90, 0.85)",
+                        textShadow: "0 0 16px rgba(0, 0, 0, 0.6)",
                         whiteSpace: "nowrap",
                         opacity: isActive ? 0 : 1,
                         transition: `opacity 400ms ${EASE}`,
                         pointerEvents: "none",
+                        zIndex: 3,
                       }}
                     >
                       {p.label}
