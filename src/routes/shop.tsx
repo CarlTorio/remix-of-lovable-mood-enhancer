@@ -87,7 +87,7 @@ function ShopPage() {
       <Navbar />
       <main>
         <ProductTabs initial={variant} />
-        <GuaranteeUrgency />
+        <TrustAssurance />
         <HowToOrder />
         <FinalShopCTA />
       </main>
