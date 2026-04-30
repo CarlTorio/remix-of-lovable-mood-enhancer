@@ -657,27 +657,146 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
           <span>🔄 30-Day Guarantee</span>
         </div>
 
-        {/* What's Included */}
-        <div className="glass-card rounded-2xl p-6 mt-7">
-          <h3 className="text-[11px] tracking-[0.22em] uppercase text-[var(--color-brand-red)] font-semibold mb-4">
-            What's Included
-          </h3>
-          <ul className="space-y-2.5">
-            {[
-              "1x LOVABLE For Her (30ml)",
-              "1x LOVABLE For Him (30ml)",
-              "FREE Couples Intimacy Guide (₱800 value)",
-              "FREE Nationwide Shipping",
-              "30-Day Money Back Guarantee",
-            ].map((line) => (
-              <li key={line} className="flex gap-3 items-start text-[var(--color-ivory)]/90 text-[14px]">
-                <span className="text-[var(--color-brand-red)] mt-0.5">✓</span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* What's Inside the Bundle */}
+        <WhatsInsideCard />
       </Reveal>
+    </div>
+  );
+}
+
+function WhatsInsideCard() {
+  const items: {
+    icon: React.ReactNode;
+    title: string;
+    sub: string;
+    free?: boolean;
+  }[] = [
+    {
+      icon: <Droplet size={22} className="text-[#B8955A]" strokeWidth={1.4} style={{ transform: "rotate(-8deg)" }} />,
+      title: "LOVABLE For Her",
+      sub: "30ml · Approx 60 doses · 1-month supply",
+    },
+    {
+      icon: <Droplet size={22} className="text-[#B8955A]" strokeWidth={1.4} style={{ transform: "rotate(8deg)" }} />,
+      title: "LOVABLE For Him",
+      sub: "30ml · Approx 60 doses · 1-month supply",
+    },
+    {
+      icon: <Gift size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
+      title: "Free Couples Intimacy Guide",
+      sub: "Digital PDF · ₱800 value",
+      free: true,
+    },
+    {
+      icon: <Truck size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
+      title: "Free Nationwide Shipping",
+      sub: "J&T, Ninja Van, or Flash · Discreet packaging",
+    },
+    {
+      icon: <ShieldCheck size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
+      title: "30-Day Money-Back Guarantee",
+      sub: "Full refund. No questions asked.",
+    },
+  ];
+
+  return (
+    <div
+      className="mt-7 rounded-2xl p-6 md:p-7"
+      style={{
+        background: "linear-gradient(180deg, #1A0A0A 0%, #110707 100%)",
+        border: "0.5px solid rgba(184, 149, 90, 0.3)",
+        boxShadow: "0 1px 0 rgba(242,234,224,0.05) inset, 0 16px 36px rgba(0,0,0,0.4)",
+      }}
+    >
+      <h3
+        style={{
+          fontFamily: "Montserrat, sans-serif",
+          fontSize: 11,
+          letterSpacing: "3px",
+          textTransform: "uppercase",
+          color: "#B8955A",
+          fontWeight: 600,
+          marginBottom: 20,
+        }}
+      >
+        What's Inside the Bundle
+      </h3>
+      <ul style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {items.map((it, i) => (
+          <li
+            key={it.title}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 14,
+              paddingBottom: i === items.length - 1 ? 0 : 16,
+              borderBottom: i === items.length - 1 ? "none" : "0.5px solid rgba(184, 149, 90, 0.15)",
+            }}
+          >
+            <span style={{ flexShrink: 0, marginTop: 2 }}>{it.icon}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    fontFamily: '"Playfair Display", Georgia, serif',
+                    fontSize: 14,
+                    color: "#F2EAE0",
+                    fontWeight: 500,
+                  }}
+                >
+                  {it.title}
+                </span>
+                {it.free && (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 5,
+                      background: "rgba(184, 149, 90, 0.15)",
+                      border: "0.5px solid rgba(184, 149, 90, 0.4)",
+                      color: "#B8955A",
+                      fontSize: 9,
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      fontWeight: 700,
+                      padding: "3px 8px",
+                      borderRadius: 999,
+                    }}
+                  >
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#DC2627" }} />
+                    Free
+                  </span>
+                )}
+              </div>
+              <div
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: 11,
+                  color: "rgba(154, 136, 128, 0.85)",
+                  marginTop: 3,
+                  lineHeight: 1.5,
+                }}
+              >
+                {it.sub}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div
+        style={{
+          marginTop: 16,
+          paddingTop: 16,
+          borderTop: "0.5px solid rgba(184, 149, 90, 0.3)",
+          fontFamily: "Montserrat, sans-serif",
+          fontStyle: "italic",
+          fontSize: 12,
+          color: "#B8955A",
+          textAlign: "center",
+        }}
+      >
+        You save ₱398 vs buying separately + bonus guide.
+      </div>
     </div>
   );
 }
