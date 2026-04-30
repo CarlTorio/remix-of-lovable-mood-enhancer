@@ -554,6 +554,7 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
 
       {/* RIGHT: details */}
       <Reveal delay={0.1}>
+        <CrossTabNav active="couples" setTab={setTab} />
         <p className="eyebrow mb-3">LOVABLE Couples Bundle</p>
         <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
           The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
@@ -563,7 +564,7 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
           <span>4.9 · 2,000+ reviews</span>
         </div>
         <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
-          One For Her. One For Him. <span style={{ color: "#F2EAE0", fontWeight: 600 }}>One goal: feel each other again.</span>
+          For couples na pareho ng goal: <span style={{ color: "#F2EAE0", fontWeight: 600 }}>bumalik sa kung sino kayo dati</span>. Synced formulas, designed to be taken together.
         </p>
 
         {/* Bundles */}
