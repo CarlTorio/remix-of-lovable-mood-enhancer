@@ -46,7 +46,10 @@ export function SocialProof() {
         .sp-card:hover {
           transform: scale(1.03);
           border: 0.5px solid rgba(220, 38, 39, 0.4) !important;
-          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5) !important;
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.1) inset,
+            0 20px 48px rgba(0, 0, 0, 0.6),
+            0 36px 72px rgba(220, 38, 39, 0.12) !important;
           z-index: 10;
         }
       `}</style>
