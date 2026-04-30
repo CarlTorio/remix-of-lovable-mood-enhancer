@@ -126,8 +126,8 @@ export function StickyUrgencyBar() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-              <a href="/shop" className="btn-primary" style={{ flex: 1, padding: "10px 20px", fontSize: 11, letterSpacing: "1.5px" }}>
-                Order Now →
+              <a href="/shop" className="btn-pulse-shine btn-pulse-compact" style={{ flex: 1 }}>
+                <span>Order Now</span> <span className="arrow">→</span>
               </a>
               <button
                 onClick={dismiss}
@@ -163,8 +163,8 @@ export function StickyUrgencyBar() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <a href="/shop" className="btn-primary" style={{ padding: "10px 24px", fontSize: 11, letterSpacing: "1.5px" }}>
-                Order Now →
+              <a href="/shop" className="btn-pulse-shine btn-pulse-compact">
+                <span>Order Now</span> <span className="arrow">→</span>
               </a>
               <button
                 onClick={dismiss}
