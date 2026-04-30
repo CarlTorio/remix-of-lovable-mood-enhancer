@@ -383,9 +383,9 @@ function ProductDetail({
           href={checkoutUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary mt-7 !w-full !py-4 text-[12px]"
+          className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
         >
-          Order Now, ₱{selectedBundle.price.toLocaleString()} →
+          <span>Order Now, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
         </a>
 
         {/* Trust chips */}
@@ -616,9 +616,9 @@ function CouplesBundle() {
           href="https://lovablecouple.shop/"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary mt-7 !w-full !py-4 text-[12px]"
+          className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
         >
-          Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()} →
+          <span>Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
         </a>
 
         {/* Trust chips */}
@@ -732,9 +732,9 @@ function UrgencyCard() {
         href="https://lovablecouple.shop/"
         target="_blank"
         rel="noopener noreferrer"
-        className="btn-primary mt-8 !w-full !py-4 text-[12px]"
+        className="btn-pulse-shine btn-pulse-medium mt-8 !w-full"
       >
-        Secure My Order Now →
+        <span>Secure My Order Now</span> <span className="arrow">→</span>
       </a>
     </div>
   );
