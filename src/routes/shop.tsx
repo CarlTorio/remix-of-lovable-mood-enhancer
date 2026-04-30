@@ -319,47 +319,49 @@ function ProductTabs({ initial }: { initial: Variant }) {
           })}
         </div>
       </div>
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
+      <section className="bg-[var(--color-noir)] pb-16 md:pb-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
 
-        {tab === "her" && (
-          <ProductDetail
-            key="her"
-            variant="her"
-            setTab={setTab}
-            eyebrow="LOVABLE Drops For Her"
-            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
-            rating="4.9"
-            reviews="1,200+"
-            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
-            mainImage={forher}
-            thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
-            bundles={herBundles}
-            bottleImage={BOTTLE_HER_URL}
-            checkoutUrl="https://lovablecouple.shop/lovableforher"
-          />
-        )}
+          {tab === "her" && (
+            <ProductDetail
+              key="her"
+              variant="her"
+              setTab={setTab}
+              eyebrow="LOVABLE Drops For Her"
+              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
+              rating="4.9"
+              reviews="1,200+"
+              description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
+              mainImage={forher}
+              thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
+              bundles={herBundles}
+              bottleImage={BOTTLE_HER_URL}
+              checkoutUrl="https://lovablecouple.shop/lovableforher"
+            />
+          )}
 
-        {tab === "him" && (
-          <ProductDetail
-            key="him"
-            variant="him"
-            setTab={setTab}
-            eyebrow="LOVABLE Drops For Him"
-            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
-            rating="4.8"
-            reviews="980+"
-            description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
-            mainImage={forhim}
-            thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
-            bundles={himBundles}
-            bottleImage={BOTTLE_HIM_URL}
-            checkoutUrl="https://lovablecouple.shop/lovableforhim"
-          />
-        )}
+          {tab === "him" && (
+            <ProductDetail
+              key="him"
+              variant="him"
+              setTab={setTab}
+              eyebrow="LOVABLE Drops For Him"
+              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
+              rating="4.8"
+              reviews="980+"
+              description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
+              mainImage={forhim}
+              thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
+              bundles={himBundles}
+              bottleImage={BOTTLE_HIM_URL}
+              checkoutUrl="https://lovablecouple.shop/lovableforhim"
+            />
+          )}
 
-        {tab === "couples" && <CouplesBundle setTab={setTab} />}
-      </div>
-    </section>
+          {tab === "couples" && <CouplesBundle setTab={setTab} />}
+        </div>
+      </section>
+    </>
   );
 }
 
