@@ -199,7 +199,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
   };
 
   return (
-    <section className="bg-[var(--color-noir)] pb-16 md:pb-20">
+    <>
       <style>{`
         .variant-tabs {
           position: sticky;
