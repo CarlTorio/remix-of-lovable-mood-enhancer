@@ -199,48 +199,34 @@ function ProductTabs({ initial }: { initial: Variant }) {
   };
 
   return (
-    <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
+    <section className="bg-[var(--color-noir)] pb-16 md:pb-20">
       <style>{`
-        /* Hide the global Navbar on /shop when scrolling down */
-        html[data-shop="true"] header {
-          transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        html[data-shop-nav-hidden="true"] header {
-          transform: translateY(-100%);
-        }
         .variant-tabs {
-          position: fixed;
+          position: sticky;
           top: 64px;
-          left: 0;
-          right: 0;
-          z-index: 45;
-          background: rgba(13, 13, 13, 0.35);
+          z-index: 30;
+          background: rgba(13, 13, 13, 0.4);
           backdrop-filter: blur(32px) saturate(1.4);
           -webkit-backdrop-filter: blur(32px) saturate(1.4);
           border-bottom: none;
-          transition: top 300ms cubic-bezier(0.4, 0, 0.2, 1),
-                      background 300ms ease,
+          transition: background 300ms ease,
                       box-shadow 300ms ease,
                       padding 300ms ease,
                       backdrop-filter 300ms ease;
           box-shadow: none;
           padding: 18px 24px;
+          margin-top: 24px;
+          margin-bottom: 24px;
         }
-        html[data-shop-nav-hidden="true"] .variant-tabs {
-          top: 0;
-        }
-        .variant-tabs::after {
-          display: none;
-        }
+        .variant-tabs::after { display: none; }
         @media (max-width: 767px) {
           .variant-tabs {
             top: 56px;
             padding: 12px 16px;
+            margin-top: 16px;
+            margin-bottom: 16px;
             backdrop-filter: blur(20px) saturate(1.3);
             -webkit-backdrop-filter: blur(20px) saturate(1.3);
-          }
-          html[data-shop-nav-hidden="true"] .variant-tabs {
-            top: 0;
           }
         }
         .variant-tabs.is-stuck {
@@ -309,11 +295,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
         @media (min-width: 640px) {
           .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
         }
-        .variant-tabs-spacer { height: 80px; }
-        @media (max-width: 767px) {
-          .variant-tabs-spacer { height: 64px; }
-        }
-        .product-display { padding-top: 24px; }
+        .product-display { padding-top: 8px; }
       `}</style>
       <div className={`variant-tabs ${scrolled ? "is-stuck" : ""}`}>
         <div className="variant-tabs-inner mx-auto max-w-7xl" role="tablist" aria-label="Product variant">
@@ -337,7 +319,6 @@ function ProductTabs({ initial }: { initial: Variant }) {
           })}
         </div>
       </div>
-      <div aria-hidden className="variant-tabs-spacer" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
 
         {tab === "her" && (
