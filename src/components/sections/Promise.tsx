@@ -61,9 +61,9 @@ export function Promise() {
     <section
       style={{
         background:
-          "radial-gradient(ellipse at 50% 30%, rgba(220,38,39,0.06), transparent 60%), #1A0A0A",
+          "radial-gradient(ellipse at 50% 30%, rgba(220,38,39,0.06), transparent 60%), #0D0D0D",
       }}
-      className="w-full py-[60px] md:py-[100px]"
+      className="section-divider relative w-full py-[60px] md:py-[100px]"
     >
       <div
         className="mx-auto"
