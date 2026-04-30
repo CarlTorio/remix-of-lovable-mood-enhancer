@@ -24,7 +24,7 @@ const benefits = [
 
 export function ForHim() {
   return (
-    <section id="forhim" className="bg-[var(--color-warm-noir)]">
+    <section id="forhim" className="bg-tier-3 section-divider relative">
       <div className="grid lg:grid-cols-2 min-h-[90vh]">
         {/* CONTENT */}
         <div className="order-2 lg:order-1 flex items-center px-6 sm:px-10 lg:px-20 py-20">
