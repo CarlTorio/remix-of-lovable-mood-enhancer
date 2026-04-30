@@ -1282,3 +1282,189 @@ function FinalShopCTA() {
     </section>
   );
 }
+
+function CrossTabNav({ active, setTab }: { active: Variant; setTab: (v: Variant) => void }) {
+  const tabs: { id: Variant; label: string }[] = [
+    { id: "her", label: "For Her" },
+    { id: "him", label: "For Him" },
+    { id: "couples", label: "Couples Bundle" },
+  ];
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 14,
+        fontFamily: "Montserrat, sans-serif",
+        fontSize: 10,
+        letterSpacing: "1.8px",
+        textTransform: "uppercase",
+      }}
+    >
+      {tabs.map((t, i) => {
+        const isActive = active === t.id;
+        return (
+          <span key={t.id} style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+            <button
+              onClick={() => setTab(t.id)}
+              className="cross-tab-link"
+              data-active={isActive}
+              style={{
+                background: "transparent",
+                border: "none",
+                padding: "4px 0",
+                cursor: "pointer",
+                fontWeight: isActive ? 700 : 500,
+                color: isActive ? "#DC2627" : "rgba(154,136,128,0.85)",
+                textDecoration: isActive ? "underline" : "none",
+                textUnderlineOffset: 4,
+                letterSpacing: "1.8px",
+                transition: "color 200ms ease",
+              }}
+            >
+              {t.label}
+            </button>
+            {i < tabs.length - 1 && (
+              <span style={{ color: "rgba(184,149,90,0.4)" }}>·</span>
+            )}
+          </span>
+        );
+      })}
+      <style>{`
+        .cross-tab-link[data-active="false"]:hover {
+          color: #B8955A !important;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function ComprehensiveFAQ() {
+  const faqs: { q: string; a: string }[] = [
+    {
+      q: "How do I use it?",
+      a: "Place half a dropper (about 0.5 ml) under your tongue. Hold for 30 seconds before swallowing. Take 1 to 2 times daily.",
+    },
+    {
+      q: "When will I feel the difference?",
+      a: "Most couples report a noticeable shift within 7 to 14 days. Effects build gradually and peak around week 3.",
+    },
+    {
+      q: "Is this safe for daily use?",
+      a: "Yes. LOVABLE is formulated with clinically-researched botanicals and contains no synthetic hormones. Safe for long-term consistent use.",
+    },
+    {
+      q: "Are For Him and For Her different formulas?",
+      a: "Yes. Each formula is precision-built for hormonal differences. For Her focuses on mood balance and arousal. For Him supports stamina and mental focus.",
+    },
+    {
+      q: "Will my partner know I'm taking it?",
+      a: "That's your choice. LOVABLE has no taste and no scent. The packaging arrives in plain unmarked boxes via J&T, Ninja Van, or Flash. Many couples take it together as a shared ritual, others use it privately.",
+    },
+    {
+      q: "What if it doesn't work for me?",
+      a: "Try LOVABLE for 30 days risk-free. If you don't feel the difference, we refund every peso. No questions, no awkwardness.",
+    },
+    {
+      q: "How do I pay? Pwede ba COD?",
+      a: "Pwede COD nationwide. Pwede din via GCash, Maya, Visa, or Mastercard. Choose what's easiest for you at checkout.",
+    },
+  ];
+
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
+
+  return (
+    <section className="bg-[#0A0606] section-divider py-[80px] md:py-[110px]">
+      <div className="mx-auto max-w-[820px] px-6">
+        <Reveal>
+          <p className="eyebrow text-center mb-4">Frequently Asked</p>
+          <h2 className="text-display text-center text-[var(--color-ivory)] text-[32px] md:text-[44px] leading-[1.1] mb-12">
+            Questions, <span style={{ color: "#B8955A", fontStyle: "italic" }}>Answered.</span>
+          </h2>
+        </Reveal>
+        <div
+          style={{
+            border: "0.5px solid rgba(184, 149, 90, 0.2)",
+            borderRadius: 14,
+            background: "linear-gradient(180deg, rgba(26,10,10,0.6) 0%, rgba(13,6,6,0.6) 100%)",
+            overflow: "hidden",
+          }}
+        >
+          {faqs.map((f, i) => {
+            const isOpen = openIdx === i;
+            return (
+              <div
+                key={f.q}
+                style={{
+                  borderBottom: i === faqs.length - 1 ? "none" : "0.5px solid rgba(184, 149, 90, 0.2)",
+                  background: isOpen ? "rgba(220, 38, 39, 0.04)" : "transparent",
+                  transition: "background 250ms ease",
+                }}
+              >
+                <button
+                  onClick={() => setOpenIdx(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 16,
+                    padding: "20px 24px",
+                    textAlign: "left",
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "#F2EAE0",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: '"Playfair Display", Georgia, serif',
+                      fontSize: 16,
+                      fontWeight: 500,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {f.q}
+                  </span>
+                  <Plus
+                    size={16}
+                    color="#B8955A"
+                    style={{
+                      flexShrink: 0,
+                      transition: "transform 300ms ease",
+                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    }}
+                  />
+                </button>
+                <div
+                  style={{
+                    maxHeight: isOpen ? 400 : 0,
+                    overflow: "hidden",
+                    transition: "max-height 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  <p
+                    style={{
+                      padding: "0 24px 20px",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: 13,
+                      lineHeight: 1.6,
+                      color: "rgba(154, 136, 128, 0.95)",
+                      margin: 0,
+                    }}
+                  >
+                    {f.a}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
