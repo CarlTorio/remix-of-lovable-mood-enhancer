@@ -33,6 +33,8 @@ export function VSL() {
     const init = () => {
       if (!containerRef.current || playerRef.current) return;
       playerRef.current = new window.YT.Player(containerRef.current, {
+        width: "100%",
+        height: "100%",
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
@@ -50,6 +52,15 @@ export function VSL() {
         },
         events: {
           onReady: (e: any) => {
+            const iframe = e.target.getIframe?.();
+            if (iframe) {
+              iframe.style.width = "100%";
+              iframe.style.height = "100%";
+              iframe.style.display = "block";
+              iframe.style.objectFit = "contain";
+              iframe.style.backgroundColor = "#0D0D0D";
+              iframe.style.border = "0";
+            }
             e.target.mute();
             e.target.playVideo();
             setDuration(e.target.getDuration() || 0);
@@ -157,11 +168,18 @@ export function VSL() {
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-start">
         <Reveal>
-            <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] w-full" style={{ background: "transparent" }}>
-            <div className="aspect-video w-full relative overflow-hidden bg-black">
+          <div
+            className="group/vsl relative mx-auto w-full max-w-[720px] overflow-hidden rounded-[14px]"
+            style={{
+              backgroundColor: "var(--color-noir)",
+              border: "0.5px solid color-mix(in oklab, var(--color-gold) 22%, transparent)",
+              boxShadow: "0 16px 48px rgba(0, 0, 0, 0.4)",
+            }}
+          >
+            <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-noir)]">
               <div
                 ref={containerRef}
-                className="pointer-events-none absolute inset-0 [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
+                className="pointer-events-none absolute inset-0 block h-full w-full bg-[var(--color-noir)] [&>iframe]:absolute [&>iframe]:inset-0 [&>iframe]:block [&>iframe]:h-full [&>iframe]:w-full [&>iframe]:border-0 [&>iframe]:bg-[var(--color-noir)] [&>iframe]:object-contain"
               />
 
               {/* Tap-to-unmute overlay */}
