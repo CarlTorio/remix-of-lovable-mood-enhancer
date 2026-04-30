@@ -10,7 +10,15 @@ type Story = {
   quote: string;
 };
 
+// Ordered for emotional arc:
+// connection → confession → permission → assurance → male validation → confidence → close
 const stories: Story[] = [
+  {
+    src: `${BASE}/Joan%202.png`,
+    alt: "Joan shares her LOVABLE experience",
+    name: "Joan",
+    quote: "Bumalik yung connection na akala ko wala na.",
+  },
   {
     src: `${BASE}/Beth.png`,
     alt: "Beth shares her LOVABLE experience",
@@ -30,22 +38,16 @@ const stories: Story[] = [
     quote: "Hindi siya magic, support lang para bumalik.",
   },
   {
-    src: `${BASE}/Joan%202.png`,
-    alt: "Joan shares her LOVABLE experience",
-    name: "Joan",
-    quote: "Bumalik yung connection na akala ko wala na.",
+    src: `${BASE}/Mark%202.png`,
+    alt: "Mark shares his LOVABLE experience",
+    name: "Mark",
+    quote: "Saan galing yung bagsik na 'to?",
   },
   {
     src: `${BASE}/Luis%202.png`,
     alt: "Luis shares his LOVABLE experience",
     name: "Luis",
     quote: "Feel it before they do.",
-  },
-  {
-    src: `${BASE}/Mark%202.png`,
-    alt: "Mark shares his LOVABLE experience",
-    name: "Mark",
-    quote: "Saan galing yung bagsik na 'to?",
   },
   {
     src: `${BASE}/Nicole%202.png`,
@@ -56,14 +58,22 @@ const stories: Story[] = [
 ];
 
 const SLIDE_MS = 7000;
-const RESUME_MS = 8000;
+const RESUME_MS = 10000;
+const INITIAL_DELAY_MS = 3000;
 
 export function SocialProof() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [showPausedBadge, setShowPausedBadge] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [progressKey, setProgressKey] = useState(0);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const featuredRef = useRef<HTMLDivElement | null>(null);
   const resumeTimer = useRef<number | null>(null);
+  const pausedBadgeTimer = useRef<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const handleCTA = () => {
     const el = document.getElementById("final-cta");
@@ -76,22 +86,70 @@ export function SocialProof() {
     setProgressKey((k) => k + 1);
   };
 
+  const triggerPausedBadge = () => {
+    setShowPausedBadge(true);
+    if (pausedBadgeTimer.current) window.clearTimeout(pausedBadgeTimer.current);
+    pausedBadgeTimer.current = window.setTimeout(() => setShowPausedBadge(false), 2000);
+  };
+
+  const pauseFor = (ms: number) => {
+    setPaused(true);
+    triggerPausedBadge();
+    if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+    resumeTimer.current = window.setTimeout(() => setPaused(false), ms);
+  };
+
   const userInteract = (i: number) => {
     goTo(i);
-    setPaused(true);
-    if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
-    resumeTimer.current = window.setTimeout(() => setPaused(false), RESUME_MS);
+    pauseFor(RESUME_MS);
   };
+
+  // Detect prefers-reduced-motion
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setReducedMotion(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Pause when section out of viewport
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Preload all testimonial images so transitions are instant
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    stories.forEach((s) => {
+      const img = new Image();
+      img.src = s.src;
+    });
+  }, []);
+
+  // Initial delay before auto-advance starts on load
+  useEffect(() => {
+    const t = window.setTimeout(() => setHasStarted(true), INITIAL_DELAY_MS);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // Auto-advance
   useEffect(() => {
-    if (paused) return;
+    if (paused || !inView || reducedMotion || !hasStarted) return;
     const t = window.setTimeout(() => {
       setActive((a) => (a + 1) % stories.length);
       setProgressKey((k) => k + 1);
     }, SLIDE_MS);
     return () => window.clearTimeout(t);
-  }, [active, paused]);
+  }, [active, paused, inView, reducedMotion, hasStarted]);
 
   // Keyboard nav when section is in viewport
   useEffect(() => {
@@ -106,17 +164,40 @@ export function SocialProof() {
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
         userInteract(active + 1);
+      } else if (e.code === "Space" && document.activeElement?.tagName !== "BUTTON") {
+        e.preventDefault();
+        if (paused) {
+          if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+          setPaused(false);
+        } else {
+          pauseFor(RESUME_MS);
+        }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active]);
+  }, [active, paused]);
 
   useEffect(() => {
     return () => {
       if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+      if (pausedBadgeTimer.current) window.clearTimeout(pausedBadgeTimer.current);
     };
   }, []);
+
+  // Swipe gestures (mobile)
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    pauseFor(RESUME_MS);
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) userInteract(active + 1);
+    else userInteract(active - 1);
+  };
 
   const story = stories[active];
 
@@ -137,12 +218,42 @@ export function SocialProof() {
           to { width: 100%; }
         }
         @keyframes sp-fade-in {
+          from { opacity: 0; transform: translateY(8px) scale(1.02); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes sp-quote-in {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .sp-fade { animation: sp-fade-in 500ms ease-out; }
+        @keyframes sp-thumb-ring {
+          from { --sp-ring: 0%; }
+          to { --sp-ring: 100%; }
+        }
+        .sp-fade { animation: sp-fade-in 500ms ease-out both; will-change: opacity, transform; }
+        .sp-quote, .sp-name, .sp-verified, .sp-divider, .sp-quote-mark {
+          animation: sp-quote-in 400ms ease-out 200ms both;
+        }
         .sp-thumbs::-webkit-scrollbar { display: none; }
         .sp-thumbs { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .sp-paused-dim { opacity: 0.5 !important; animation-play-state: paused !important; }
+        .sp-thumb-ring {
+          position: absolute;
+          inset: -3px;
+          border-radius: 11px;
+          padding: 1.5px;
+          background: conic-gradient(#B8955A var(--sp-ring, 0%), transparent 0);
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+                  mask-composite: exclude;
+          pointer-events: none;
+        }
+        .sp-thumb-ring.run { animation: sp-thumb-ring 7s linear forwards; }
+        .sp-thumb-ring.paused { animation-play-state: paused; opacity: 0.5; }
+        @media (prefers-reduced-motion: reduce) {
+          .sp-fade, .sp-quote, .sp-name, .sp-verified, .sp-divider, .sp-quote-mark { animation: none !important; }
+          .sp-progress-wrap { display: none !important; }
+          .sp-thumb-ring { display: none; }
+        }
 
         /* Mobile-first stacking for the featured story */
         .sp-featured { display: block; }
@@ -245,7 +356,12 @@ export function SocialProof() {
         {/* Featured story */}
         <Reveal delay={0.15}>
           <div className="text-left">
-            <div className="sp-featured">
+            <div
+              className="sp-featured"
+              ref={featuredRef}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+            >
               {/* Image */}
               <div
                 key={`img-${active}`}
@@ -276,6 +392,32 @@ export function SocialProof() {
                   }}
                 >
                   Featured Story
+                </span>
+                {/* Paused indicator */}
+                <span
+                  aria-hidden
+                  className="absolute uppercase inline-flex items-center gap-1.5"
+                  style={{
+                    top: 12,
+                    right: 12,
+                    padding: "4px 10px",
+                    borderRadius: 999,
+                    background: "rgba(0,0,0,0.7)",
+                    color: "#F2EAE0",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: 9,
+                    letterSpacing: "1.5px",
+                    fontWeight: 600,
+                    opacity: showPausedBadge && paused ? 0.85 : 0,
+                    transition: "opacity 250ms ease",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden>
+                    <rect x="1" y="1" width="2" height="6" fill="#F2EAE0" />
+                    <rect x="5" y="1" width="2" height="6" fill="#F2EAE0" />
+                  </svg>
+                  Paused
                 </span>
               </div>
 
@@ -367,66 +509,73 @@ export function SocialProof() {
           {stories.map((s, i) => {
             const isActive = i === active;
             return (
-              <button
+              <div
                 key={s.src}
-                onClick={() => userInteract(i)}
-                aria-label={`Show story from ${s.name}`}
-                aria-current={isActive}
-                className="shrink-0 overflow-hidden focus:outline-none"
-                style={{
-                  width: "var(--sp-thumb-w, 110px)",
-                  aspectRatio: "16 / 9",
-                  flexShrink: 0,
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  border: isActive
-                    ? "1px solid #DC2627"
-                    : "0.5px solid rgba(184, 149, 90, 0.22)",
-                  opacity: isActive ? 1 : 0.55,
-                  transform: isActive ? "scale(1.05)" : "scale(1)",
-                  boxShadow: isActive
-                    ? "0 8px 20px rgba(220, 38, 39, 0.25)"
-                    : "none",
-                  transition: "all 300ms ease",
-                  scrollSnapAlign: "center",
-                  background: "#1A0A0A",
-                  padding: 0,
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.opacity = "0.85";
-                    e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.5)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.opacity = "0.55";
-                    e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.22)";
-                  }
-                }}
+                className="shrink-0 relative"
+                style={{ width: "var(--sp-thumb-w, 110px)", flexShrink: 0 }}
               >
-                <img
-                  src={s.src}
-                  alt={s.alt}
-                  loading="lazy"
-                  width={220}
-                  height={124}
-                  className="block w-full h-full"
-                  style={{ objectFit: "cover", objectPosition: "center" }}
-                />
-              </button>
+                {isActive && (
+                  <span
+                    aria-hidden
+                    key={`ring-${progressKey}`}
+                    className={`sp-thumb-ring run ${paused ? "paused" : ""}`}
+                  />
+                )}
+                <button
+                  onClick={() => userInteract(i)}
+                  aria-label={`Show story from ${s.name}`}
+                  aria-current={isActive}
+                  className="block w-full overflow-hidden focus:outline-none"
+                  style={{
+                    aspectRatio: "16 / 9",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    border: isActive
+                      ? "1px solid #DC2627"
+                      : "0.5px solid rgba(184, 149, 90, 0.22)",
+                    opacity: isActive ? 1 : 0.55,
+                    transform: isActive ? "scale(1.05)" : "scale(1)",
+                    boxShadow: isActive
+                      ? "0 8px 20px rgba(220, 38, 39, 0.3)"
+                      : "none",
+                    transition: "all 300ms ease",
+                    scrollSnapAlign: "center",
+                    background: "#1A0A0A",
+                    padding: 0,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.opacity = "0.85";
+                      e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.5)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.opacity = "0.55";
+                      e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.22)";
+                    }
+                  }}
+                >
+                  <img
+                    src={s.src}
+                    alt={s.alt}
+                    loading="lazy"
+                    width={220}
+                    height={124}
+                    className="block w-full h-full"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                </button>
+              </div>
             );
           })}
           <style>{`
             .sp-thumbs { --sp-thumb-w: 72px; --sp-thumb-gap: 8px; --sp-thumb-pad: 16px 12px; }
-            .sp-thumbs button { width: 72px !important; }
             @media (min-width: 768px) and (max-width: 1023px) {
               .sp-thumbs { --sp-thumb-w: 90px; --sp-thumb-gap: 12px; --sp-thumb-pad: 8px 0; }
-              .sp-thumbs button { width: 90px !important; }
             }
             @media (min-width: 1024px) {
               .sp-thumbs { --sp-thumb-w: 110px; --sp-thumb-gap: 12px; --sp-thumb-pad: 8px 0; }
-              .sp-thumbs button { width: 110px !important; }
             }
           `}</style>
         </div>
@@ -439,20 +588,20 @@ export function SocialProof() {
             width: "200px",
             height: "1.5px",
             background: "rgba(154, 136, 128, 0.2)",
-            margin: "20px auto 0",
+            margin: "24px auto 0",
             overflow: "hidden",
             borderRadius: "999px",
+            opacity: paused ? 0.5 : 1,
+            transition: "opacity 250ms ease",
           }}
         >
           <div
-            key={`p-${progressKey}-${paused ? "p" : "r"}`}
+            key={`p-${progressKey}`}
             style={{
               height: "100%",
               background: "#DC2627",
-              width: paused ? undefined : "100%",
-              animation: paused
-                ? "none"
-                : `sp-progress ${SLIDE_MS}ms linear forwards`,
+              animation: `sp-progress ${SLIDE_MS}ms linear forwards`,
+              animationPlayState: paused || !inView || !hasStarted ? "paused" : "running",
             }}
           />
         </div>
