@@ -588,20 +588,20 @@ export function SocialProof() {
             width: "200px",
             height: "1.5px",
             background: "rgba(154, 136, 128, 0.2)",
-            margin: "20px auto 0",
+            margin: "24px auto 0",
             overflow: "hidden",
             borderRadius: "999px",
+            opacity: paused ? 0.5 : 1,
+            transition: "opacity 250ms ease",
           }}
         >
           <div
-            key={`p-${progressKey}-${paused ? "p" : "r"}`}
+            key={`p-${progressKey}`}
             style={{
               height: "100%",
               background: "#DC2627",
-              width: paused ? undefined : "100%",
-              animation: paused
-                ? "none"
-                : `sp-progress ${SLIDE_MS}ms linear forwards`,
+              animation: `sp-progress ${SLIDE_MS}ms linear forwards`,
+              animationPlayState: paused || !inView || !hasStarted ? "paused" : "running",
             }}
           />
         </div>
