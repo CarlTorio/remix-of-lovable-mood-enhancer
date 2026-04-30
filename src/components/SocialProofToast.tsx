@@ -154,15 +154,20 @@ export function SocialProofToast() {
         aria-label="Close notification"
         style={{
           position: "absolute",
-          top: 6,
-          right: 8,
+          top: 0,
+          right: 0,
+          width: 32,
+          height: 32,
           background: "transparent",
           border: "none",
           color: "#9A8880",
-          fontSize: 14,
+          fontSize: 16,
           lineHeight: 1,
           cursor: "pointer",
-          padding: 2,
+          padding: 0,
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         ×
