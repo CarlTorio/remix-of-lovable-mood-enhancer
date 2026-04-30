@@ -164,22 +164,12 @@ function ProductTabs({ initial }: { initial: Variant }) {
   ];
 
   const [scrolled, setScrolled] = useState(false);
-  const [navHidden, setNavHidden] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    let lastY = window.scrollY;
     let ticking = false;
     const update = () => {
-      const y = window.scrollY;
-      setScrolled(y > 80);
-      if (y > lastY && y > 200) {
-        setNavHidden(true);
-      } else if (y < lastY - 4) {
-        setNavHidden(false);
-      }
-      if (y < 80) setNavHidden(false);
-      lastY = y;
+      setScrolled(window.scrollY > 120);
       ticking = false;
     };
     const onScroll = () => {
@@ -192,26 +182,6 @@ function ProductTabs({ initial }: { initial: Variant }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Tag the document so scoped CSS can target the global Navbar from this route only
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    root.setAttribute("data-shop", "true");
-    return () => {
-      root.removeAttribute("data-shop");
-      root.removeAttribute("data-shop-nav-hidden");
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (navHidden) {
-      document.documentElement.setAttribute("data-shop-nav-hidden", "true");
-    } else {
-      document.documentElement.removeAttribute("data-shop-nav-hidden");
-    }
-  }, [navHidden]);
 
   const handleTabClick = (id: Variant) => {
     setTab(id);
