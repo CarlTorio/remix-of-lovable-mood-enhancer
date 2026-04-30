@@ -424,12 +424,6 @@ function ProductDetail({
           <span>🔄 30-Day Guarantee</span>
         </div>
 
-        {/* Mini FAQ */}
-        <div className="mt-9 border-t border-white/[0.08]">
-          {faq.map((f) => (
-            <MiniFaq key={f.q} q={f.q} a={f.a} />
-          ))}
-        </div>
       </Reveal>
     </div>
   );
