@@ -129,7 +129,7 @@ export function PainPoints() {
         <Reveal>
           <div
             className="text-center mx-auto"
-            style={{ maxWidth: "720px", marginBottom: "48px" }}
+            style={{ maxWidth: "720px", marginBottom: "64px" }}
           >
             <p
               style={{
@@ -145,20 +145,36 @@ export function PainPoints() {
               Does This Sound Familiar?
             </p>
             <h2
-              className="text-[32px] md:text-[44px]"
+              className="text-[32px] md:text-[44px] lg:text-[56px]"
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontWeight: 700,
+                fontWeight: 400,
                 color: "#F2EAE0",
-                lineHeight: 1.25,
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
                 textAlign: "center",
+                marginBottom: "32px",
               }}
             >
-              You Love Each Other. But Something Feels...{" "}
+              You Still Love Them. But the{" "}
               <span style={{ color: "#DC2627", fontStyle: "italic" }}>
-                Different.
+                Hunger is Gone.
               </span>
             </h2>
+            <p
+              className="text-[15px] md:text-[18px]"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontStyle: "italic",
+                color: "rgba(242, 234, 224, 0.7)",
+                lineHeight: 1.5,
+                textAlign: "center",
+                maxWidth: "480px",
+                margin: "0 auto",
+              }}
+            >
+              And no one wants to say it out loud.
+            </p>
           </div>
         </Reveal>
 
