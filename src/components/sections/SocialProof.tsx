@@ -434,6 +434,7 @@ export function SocialProof() {
         {/* Progress bar */}
         <div
           aria-hidden
+          className="sp-progress-wrap"
           style={{
             width: "200px",
             height: "1.5px",
@@ -458,14 +459,11 @@ export function SocialProof() {
       </div>
 
       {/* CTA */}
-      <div
-        className="flex flex-col items-center px-6"
-        style={{ marginTop: "64px" }}
-      >
+      <div className="sp-cta-wrap flex flex-col items-center px-6">
         <p
+          className="sp-cta-pre"
           style={{
             fontFamily: "Montserrat, sans-serif",
-            fontSize: "12px",
             color: "#9A8880",
             marginBottom: "20px",
             textAlign: "center",
@@ -474,7 +472,7 @@ export function SocialProof() {
         >
           Join thousands of couples who already feel the difference.
         </p>
-        <button onClick={handleCTA} className="btn-primary">
+        <button onClick={handleCTA} className="btn-primary sp-cta-btn">
           I've Seen Enough, Order Mine
         </button>
       </div>
