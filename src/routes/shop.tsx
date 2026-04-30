@@ -298,6 +298,11 @@ function ProductTabs({ initial }: { initial: Variant }) {
             0 8px 24px rgba(0, 0, 0, 0.2);
           transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .tab-pill:not(.active) {
+          background: rgba(13, 13, 13, 0.7) !important;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
         .tab-pill.active {
           box-shadow:
             0 1px 0 rgba(242, 234, 224, 0.15) inset,
