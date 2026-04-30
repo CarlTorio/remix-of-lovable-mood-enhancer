@@ -142,7 +142,65 @@ export function SocialProof() {
         }
         .sp-fade { animation: sp-fade-in 500ms ease-out; }
         .sp-thumbs::-webkit-scrollbar { display: none; }
-        .sp-thumbs { scrollbar-width: none; }
+        .sp-thumbs { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+
+        /* Mobile-first stacking for the featured story */
+        .sp-featured { display: block; }
+        .sp-image { aspect-ratio: 16 / 9; border-radius: 12px; margin-bottom: 24px; }
+        .sp-badge {
+          top: 12px; left: 12px;
+          padding: 4px 10px;
+          font-size: 8px;
+          letter-spacing: 2px;
+          box-shadow: 0 2px 8px rgba(220, 38, 39, 0.3);
+        }
+        .sp-content { padding: 0 4px; margin-top: 0; }
+        .sp-quote-mark { font-size: 32px; margin-bottom: 12px; }
+        .sp-quote { font-size: 22px; line-height: 1.4; margin-bottom: 24px; padding: 0; }
+        .sp-divider { width: 40px; margin-bottom: 16px; }
+        .sp-name { font-size: 13px; font-weight: 500; }
+        .sp-verified {
+          display: flex !important;
+          margin-top: 6px;
+          font-size: 9px;
+          letter-spacing: 1.5px;
+        }
+        .sp-progress-wrap { display: none; }
+        .sp-cta-wrap { margin-top: 40px !important; }
+        .sp-cta-pre { font-size: 11px !important; }
+        .sp-cta-btn { width: 100%; min-height: 52px; }
+
+        @media (min-width: 768px) {
+          .sp-featured {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 48px;
+            align-items: center;
+          }
+          .sp-image { aspect-ratio: 16 / 9; border-radius: 14px; margin-bottom: 0; }
+          .sp-badge {
+            top: 16px; left: 16px;
+            padding: 6px 14px;
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            box-shadow: 0 4px 12px rgba(220, 38, 39, 0.3);
+          }
+          .sp-content { padding: 0; margin-top: 0; }
+          .sp-quote-mark { font-size: 48px; margin-bottom: 16px; }
+          .sp-quote { font-size: 26px; line-height: 1.5; margin-bottom: 32px; }
+          .sp-divider { width: 60px; margin-bottom: 20px; }
+          .sp-name { font-size: 14px; }
+          .sp-verified {
+            display: inline-flex !important;
+            margin-top: 0;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+          }
+          .sp-progress-wrap { display: block; }
+          .sp-cta-wrap { margin-top: 64px !important; }
+          .sp-cta-pre { font-size: 12px !important; }
+          .sp-cta-btn { width: auto; min-height: auto; }
+        }
       `}</style>
 
       <div className="mx-auto max-w-[1200px] px-6 text-center">
@@ -186,30 +244,16 @@ export function SocialProof() {
 
         {/* Featured story */}
         <Reveal delay={0.15}>
-          <div
-            className="grid gap-8 md:gap-12 text-left"
-            style={{
-              gridTemplateColumns: "1fr",
-              minHeight: "auto",
-            }}
-          >
-            <div
-              className="md:grid md:gap-12 md:items-center"
-              style={{
-                gridTemplateColumns: "60% 40%",
-                display: "grid",
-              }}
-            >
+          <div className="text-left">
+            <div className="sp-featured">
               {/* Image */}
               <div
                 key={`img-${active}`}
-                className="sp-fade relative w-full overflow-hidden"
+                className="sp-fade sp-image relative w-full overflow-hidden"
                 style={{
-                  borderRadius: "14px",
                   border: "0.5px solid rgba(184, 149, 90, 0.22)",
                   boxShadow:
                     "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 16px 48px rgba(0, 0, 0, 0.5), 0 24px 64px rgba(0, 0, 0, 0.3)",
-                  aspectRatio: "16 / 9",
                   background: "#1A0A0A",
                 }}
               >
@@ -222,19 +266,13 @@ export function SocialProof() {
                   style={{ objectFit: "cover", objectPosition: "center" }}
                 />
                 <span
-                  className="absolute uppercase"
+                  className="sp-badge absolute uppercase"
                   style={{
-                    top: "16px",
-                    left: "16px",
                     background: "#DC2627",
-                    padding: "6px 14px",
                     borderRadius: "999px",
                     fontFamily: "Montserrat, sans-serif",
-                    fontSize: "9px",
-                    letterSpacing: "2.5px",
                     color: "#F2EAE0",
                     fontWeight: 600,
-                    boxShadow: "0 4px 12px rgba(220, 38, 39, 0.3)",
                   }}
                 >
                   Featured Story
@@ -242,45 +280,40 @@ export function SocialProof() {
               </div>
 
               {/* Content */}
-              <div key={`content-${active}`} className="sp-fade mt-8 md:mt-0">
+              <div key={`content-${active}`} className="sp-fade sp-content">
                 <span
                   aria-hidden
+                  className="sp-quote-mark"
                   style={{
                     color: "#DC2627",
-                    fontSize: "48px",
                     lineHeight: 1,
                     display: "block",
-                    marginBottom: "16px",
                     fontFamily: "'Playfair Display', Georgia, serif",
                   }}
                 >
                   ❝
                 </span>
                 <p
-                  className="text-[20px] md:text-[26px]"
+                  className="sp-quote"
                   style={{
                     fontFamily: "'Playfair Display', Georgia, serif",
                     fontStyle: "italic",
                     color: "#F2EAE0",
-                    lineHeight: 1.5,
-                    marginBottom: "32px",
                   }}
                 >
                   {story.quote}
                 </p>
                 <div
+                  className="sp-divider"
                   style={{
-                    width: "60px",
                     height: "0.5px",
                     background: "rgba(184, 149, 90, 0.6)",
-                    marginBottom: "20px",
                   }}
                 />
                 <div
+                  className="sp-name"
                   style={{
                     fontFamily: "Montserrat, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: 500,
                     color: "#F2EAE0",
                     marginBottom: "6px",
                   }}
@@ -288,18 +321,16 @@ export function SocialProof() {
                   {story.name}
                 </div>
                 <div
-                  className="uppercase inline-flex items-center gap-1.5"
+                  className="sp-verified uppercase items-center gap-1.5"
                   style={{
                     fontFamily: "Montserrat, sans-serif",
-                    fontSize: "10px",
-                    letterSpacing: "1.5px",
                     color: "#B8955A",
                     fontWeight: 500,
                   }}
                 >
                   <svg
-                    width="11"
-                    height="11"
+                    width="12"
+                    height="12"
                     viewBox="0 0 16 16"
                     fill="none"
                     aria-hidden
@@ -325,8 +356,13 @@ export function SocialProof() {
 
         {/* Thumbnails */}
         <div
-          className="sp-thumbs flex gap-3 justify-start md:justify-center overflow-x-auto"
-          style={{ marginTop: "40px", padding: "8px 0", scrollSnapType: "x mandatory" }}
+          className="sp-thumbs flex justify-start md:justify-center overflow-x-auto"
+          style={{
+            marginTop: "32px",
+            gap: "var(--sp-thumb-gap, 8px)",
+            padding: "var(--sp-thumb-pad, 16px 12px)",
+            scrollSnapType: "x mandatory",
+          }}
         >
           {stories.map((s, i) => {
             const isActive = i === active;
@@ -340,6 +376,7 @@ export function SocialProof() {
                 style={{
                   width: "var(--sp-thumb-w, 110px)",
                   aspectRatio: "16 / 9",
+                  flexShrink: 0,
                   borderRadius: "8px",
                   cursor: "pointer",
                   border: isActive
@@ -381,11 +418,15 @@ export function SocialProof() {
             );
           })}
           <style>{`
-            @media (max-width: 767px) {
-              .sp-thumbs button { --sp-thumb-w: 80px; width: 80px !important; }
-            }
+            .sp-thumbs { --sp-thumb-w: 72px; --sp-thumb-gap: 8px; --sp-thumb-pad: 16px 12px; }
+            .sp-thumbs button { width: 72px !important; }
             @media (min-width: 768px) and (max-width: 1023px) {
-              .sp-thumbs button { --sp-thumb-w: 90px; width: 90px !important; }
+              .sp-thumbs { --sp-thumb-w: 90px; --sp-thumb-gap: 12px; --sp-thumb-pad: 8px 0; }
+              .sp-thumbs button { width: 90px !important; }
+            }
+            @media (min-width: 1024px) {
+              .sp-thumbs { --sp-thumb-w: 110px; --sp-thumb-gap: 12px; --sp-thumb-pad: 8px 0; }
+              .sp-thumbs button { width: 110px !important; }
             }
           `}</style>
         </div>
@@ -393,6 +434,7 @@ export function SocialProof() {
         {/* Progress bar */}
         <div
           aria-hidden
+          className="sp-progress-wrap"
           style={{
             width: "200px",
             height: "1.5px",
@@ -417,14 +459,11 @@ export function SocialProof() {
       </div>
 
       {/* CTA */}
-      <div
-        className="flex flex-col items-center px-6"
-        style={{ marginTop: "64px" }}
-      >
+      <div className="sp-cta-wrap flex flex-col items-center px-6">
         <p
+          className="sp-cta-pre"
           style={{
             fontFamily: "Montserrat, sans-serif",
-            fontSize: "12px",
             color: "#9A8880",
             marginBottom: "20px",
             textAlign: "center",
@@ -433,7 +472,7 @@ export function SocialProof() {
         >
           Join thousands of couples who already feel the difference.
         </p>
-        <button onClick={handleCTA} className="btn-primary">
+        <button onClick={handleCTA} className="btn-primary sp-cta-btn">
           I've Seen Enough, Order Mine
         </button>
       </div>
