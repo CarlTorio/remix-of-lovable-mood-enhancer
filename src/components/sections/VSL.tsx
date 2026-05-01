@@ -28,6 +28,16 @@ export function VSL() {
   const [ready, setReady] = useState(false);
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [controlsVisible, setControlsVisible] = useState(false);
+  const hideControlsTimer = useRef<number | null>(null);
+
+  const showControls = () => {
+    setControlsVisible(true);
+    if (hideControlsTimer.current) window.clearTimeout(hideControlsTimer.current);
+    hideControlsTimer.current = window.setTimeout(() => {
+      setControlsVisible(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     const init = () => {
