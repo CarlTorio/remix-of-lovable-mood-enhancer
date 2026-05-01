@@ -349,6 +349,8 @@ export function PainPoints() {
                   <img
                     src={p.image}
                     alt={p.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchPriority={i === 0 ? "high" : "auto"}
                     className="absolute inset-0 w-full h-full object-cover"
                     style={{
                       filter: imageFilter,
