@@ -36,8 +36,7 @@ export function Hero() {
           .hero-image {
             width: 115%;
             margin-left: -5%;
-            object-position: right 25%;
-            transform: translateX(4%) translateY(6%);
+            object-position: center center;
             mask-image: linear-gradient(
               to right,
               transparent 0%,
