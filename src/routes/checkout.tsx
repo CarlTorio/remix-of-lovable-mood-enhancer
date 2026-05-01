@@ -377,6 +377,7 @@ function CheckoutPage() {
         @media (max-width: 900px) {
           .ck-mobile-bottom { display: flex; }
           .ck-place-order { display: none; }
+          .ck-hide-mobile { display: none !important; }
         }
       `}</style>
     </div>
