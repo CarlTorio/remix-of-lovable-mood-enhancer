@@ -388,8 +388,8 @@ export function PainPoints() {
                     style={{
                       boxShadow: "inset 0 0 80px rgba(0,0,0,0.45)",
                       background: isActive
-                        ? "linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.3) 40%, transparent 70%)"
-                        : "linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.57) 100%)",
+                        ? "linear-gradient(180deg, rgba(13,13,13,0.10) 0%, rgba(13,13,13,0.25) 60%, rgba(13,13,13,0.45) 100%)"
+                        : "linear-gradient(180deg, rgba(13,13,13,0.15) 0%, rgba(13,13,13,0.35) 60%, rgba(13,13,13,0.55) 100%)",
                       transition: `background 500ms ${EASE}`,
                     }}
                   />
