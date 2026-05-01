@@ -146,11 +146,11 @@ export function Hero() {
       </div>
 
       {/* Left side: text content */}
-      <div className="order-1 md:order-1 relative z-[10] w-full md:w-1/2 flex items-end md:items-center justify-center px-6 pt-32 pb-24 md:py-28 md:min-h-[100svh] min-h-[100svh] md:min-h-0">
+      <div className="order-1 md:order-1 relative z-[10] w-full md:w-1/2 flex items-end md:items-center justify-center px-6 pt-24 pb-14 md:py-28 md:min-h-[100svh] min-h-[100svh] md:min-h-0">
         <div className="max-w-xl w-full text-left">
           <Reveal>
             <p
-              className="uppercase mb-6"
+              className="uppercase mb-3 md:mb-6"
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontSize: "11px",
@@ -164,14 +164,13 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1
-              className="hero-headline-mobile text-[40px] md:text-[56px] lg:text-[72px]"
+              className="hero-headline-mobile text-[40px] md:text-[56px] lg:text-[72px] mb-3 md:!mb-5"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 color: "#F2EAE0",
                 lineHeight: 1.1,
                 fontWeight: 400,
                 letterSpacing: "-0.025em",
-                marginBottom: "20px",
               }}
             >
               Feel That{" "}
@@ -181,14 +180,13 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.2}>
             <p
-              className="text-[17px] md:text-[20px] lg:text-[22px]"
+              className="text-[17px] md:text-[20px] lg:text-[22px] mb-5 md:!mb-9"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 fontStyle: "italic",
                 color: "rgba(242, 234, 224, 0.78)",
                 lineHeight: 1.5,
                 maxWidth: "540px",
-                marginBottom: "36px",
               }}
             >
               A natural blend for couples ready to want each other like the{" "}
@@ -196,10 +194,10 @@ export function Hero() {
             </p>
           </Reveal>
           <Reveal delay={0.3}>
-            <div className="flex flex-col items-start gap-5 sm:gap-6">
+            <div className="flex flex-col items-start gap-3 sm:gap-6">
               <div className="flex flex-col items-start">
                 <span
-                  className="uppercase"
+                  className="uppercase mb-2 md:!mb-4"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -208,7 +206,6 @@ export function Hero() {
                     fontSize: "11px",
                     letterSpacing: "2.5px",
                     color: "#B8955A",
-                    marginBottom: "16px",
                   }}
                 >
                   <span
@@ -239,7 +236,7 @@ export function Hero() {
             </div>
           </Reveal>
           <Reveal delay={0.45}>
-            <ul className="mt-8 flex flex-wrap items-center md:justify-start justify-center gap-x-4 gap-y-2">
+            <ul className="mt-5 md:mt-8 flex flex-wrap items-center md:justify-start justify-center gap-x-4 gap-y-2">
               {["30-Day Money Back", "100% Natural", "Made in USA"].map((item) => (
                 <li key={item} className="flex items-center gap-2" style={{ color: "#9A8880", fontSize: "10px" }}>
                   <span
