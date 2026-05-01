@@ -222,55 +222,24 @@ function CheckoutPage() {
             <SectionCard>
               <SectionHeader number={2} title="Payment" italic="Method" right={
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>
-                  <Lock size={11} /> Secure
+                  <Truck size={11} /> Cash on Delivery
                 </span>
               } />
 
               <PaymentCard
-                selected={payment === "cod"}
-                onClick={() => setPayment("cod")}
+                selected
+                onClick={() => {}}
                 icon={<Truck size={20} color="#B8955A" />}
                 title={<>Cash on <em style={{ color: "#DC2627", fontStyle: "italic" }}>Delivery</em> (COD)</>}
                 subtitle="Pay when you receive your order"
               />
-              <PaymentCard
-                selected={payment === "qr"}
-                onClick={() => setPayment("qr")}
-                icon={<ShieldCheck size={20} color="#B8955A" />}
-                title={<>Bank <em style={{ color: "#DC2627", fontStyle: "italic" }}>Transfer</em> (QR Code)</>}
-                subtitle="Pay via GCash, Maya, or InstaPay"
-                badge="MOST POPULAR"
-              />
-              <PaymentCard
-                selected={payment === "card"}
-                onClick={() => setPayment("card")}
-                icon={<CreditCard size={20} color="#B8955A" />}
-                title="Credit or Debit Card"
-                subtitle="Visa, Mastercard, JCB"
-                logos
-              >
-                {payment === "card" && (
-                  <div style={{ marginTop: 16, display: "grid", gap: 12 }}>
-                    <Field label="Card Number" required>
-                      <input className="ck-input" placeholder="1234 5678 9012 3456" value={form.cardNumber} onChange={(e) => update("cardNumber", e.target.value)} />
-                    </Field>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      <Field label="Expiration" required>
-                        <input className="ck-input" placeholder="MM / YY" value={form.cardExp} onChange={(e) => update("cardExp", e.target.value)} />
-                      </Field>
-                      <Field label="CVV" required>
-                        <input className="ck-input" placeholder="123" value={form.cardCvv} onChange={(e) => update("cardCvv", e.target.value)} />
-                      </Field>
-                    </div>
-                    <Field label="Cardholder Name" required>
-                      <input className="ck-input" value={form.cardName} onChange={(e) => update("cardName", e.target.value)} />
-                    </Field>
-                  </div>
-                )}
-              </PaymentCard>
+
+              <div style={{ marginTop: 12, fontSize: 12, fontStyle: "italic", color: "#B8955A" }}>
+                We'll text you when your order is ready for delivery.
+              </div>
 
               <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontStyle: "italic", color: "#9A8880" }}>
-                <Lock size={12} /> All transactions are secure and encrypted via SSL
+                <Lock size={12} /> Your delivery information is encrypted and never shared. ✓
               </div>
             </SectionCard>
 
