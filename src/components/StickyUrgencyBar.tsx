@@ -11,7 +11,6 @@ export function StickyUrgencyBar() {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [count, setCount] = useState(247);
-  const [seconds, setSeconds] = useState(23 * 3600 + 47 * 60 + 12);
   const [isMobile, setIsMobile] = useState(false);
   const [onShop, setOnShop] = useState(false);
 
