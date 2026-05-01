@@ -70,12 +70,11 @@ export function Hero() {
             z-index: 0 !important;
           }
           .hero-image {
-            width: 115%;
-            height: 115%;
-            margin-left: -7.5%;
-            margin-top: -5%;
+            width: 100%;
+            height: 100%;
+            margin-left: 0;
             object-fit: cover;
-            object-position: 90% 0%;
+            object-position: 65% 5%;
             mask-image: none;
             -webkit-mask-image: none;
             background: #0A0606;
