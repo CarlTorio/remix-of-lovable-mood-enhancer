@@ -139,6 +139,8 @@ export function Hero() {
           alt="Filipino couple in tender embrace holding LOVABLE bottles"
           className="hero-image"
         />
+        {/* Mobile overlay to darken image so text overlays cleanly */}
+        <div aria-hidden className="hero-mobile-overlay" />
         {/* Bridge gradient that paints over any seam on the left edge (desktop only) */}
         <div aria-hidden className="hero-bridge" />
       </div>
