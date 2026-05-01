@@ -140,6 +140,7 @@ export function PainPoints() {
   const [hovered, setHovered] = useState<number | null>(null);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
+  const panelRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useEffect(() => {
     const check = () => {
@@ -149,6 +150,50 @@ export function PainPoints() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // Mobile: auto-activate the panel whose center is closest to viewport center
+  useEffect(() => {
+    if (!isMobile) return;
+    if (typeof window === "undefined") return;
+
+    let rafId: number | null = null;
+
+    const update = () => {
+      rafId = null;
+      const viewportCenter = window.innerHeight / 2;
+      let closestIdx = -1;
+      let closestDist = Infinity;
+      panelRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Skip if completely off-screen
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - viewportCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIdx = i;
+        }
+      });
+      if (closestIdx !== -1) {
+        setActive((prev) => (prev === closestIdx ? prev : closestIdx));
+      }
+    };
+
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [isMobile]);
 
   const useTap = isMobile || isTablet;
 
