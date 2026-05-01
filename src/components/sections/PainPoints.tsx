@@ -71,7 +71,7 @@ type Panel = {
 const panels: Panel[] = [
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/1.%20Couple%20Drifting%20Apart.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20May%202,%202026,%2012_55_06%20AM.png",
     alt: "Couple drifting apart",
     number: "01",
     label: "DRIFTING",
@@ -81,7 +81,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/2.%20Distance%20in%20Bed.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20May%202,%202026,%2001_01_54%20AM.png",
     alt: "Distance in bed",
     number: "02",
     label: "DISTANCE",
@@ -91,7 +91,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/3.%20Together%20But%20Apart.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20May%202,%202026,%2001_05_12%20AM.png",
     alt: "Together but worlds apart",
     number: "03",
     label: "APART",
@@ -102,7 +102,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/4.%20Drained%20Energy.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20May%202,%202026,%2001_09_39%20AM.png",
     alt: "Drained energy",
     number: "04",
     label: "DRAINED",
@@ -112,7 +112,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/5.%20Missing%20The%20Past.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20May%202,%202026,%2001_11_25%20AM.png",
     alt: "Missing the past",
     number: "05",
     label: "MISSING",
@@ -122,7 +122,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/6.%20Silent%20Struggle.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20May%202,%202026,%2001_15_06%20AM.png",
     alt: "Silent struggle",
     number: "06",
     label: "SILENT",
