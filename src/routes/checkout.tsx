@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Lock, Truck, ShieldCheck, CreditCard, CheckCircle2, ArrowLeft, Star } from "lucide-react";
+import { Lock, Truck, CheckCircle2, ArrowLeft, Star } from "lucide-react";
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
@@ -59,7 +59,7 @@ function CheckoutPage() {
   const navigate = useNavigate();
   const item = PRICING[variant][bundle];
 
-  const [payment, setPayment] = useState<"cod" | "qr" | "card">("qr");
+  const payment = "cod" as const;
   const [discountCode, setDiscountCode] = useState("");
   const [discountApplied, setDiscountApplied] = useState<{ code: string; amount: number } | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -67,9 +67,7 @@ function CheckoutPage() {
 
   // Form state (kept minimal but real)
   const [form, setForm] = useState({
-    country: "Philippines",
-    firstName: "",
-    lastName: "",
+    fullName: "",
     phone: "",
     email: "",
     address: "",
@@ -77,11 +75,8 @@ function CheckoutPage() {
     city: "",
     barangay: "",
     saveInfo: true,
-    cardNumber: "",
-    cardExp: "",
-    cardCvv: "",
-    cardName: "",
   });
+  const [fullNameError, setFullNameError] = useState<string | null>(null);
 
   // Restore from sessionStorage
   useEffect(() => {
@@ -121,8 +116,34 @@ function CheckoutPage() {
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+
+    const fullName = form.fullName.trim();
+    if (!fullName.includes(" ")) {
+      setFullNameError("Please enter your full name (first and last)");
+      return;
+    }
+
     setSubmitting(true);
+    const [firstName, ...rest] = fullName.split(/\s+/);
+    const lastName = rest.join(" ");
+    const order = {
+      country: "Philippines",
+      fullName,
+      firstName,
+      lastName,
+      phone: form.phone,
+      email: form.email,
+      address: form.address,
+      region: form.region,
+      city: form.city,
+      barangay: form.barangay,
+      paymentMethod: "COD",
+      variant,
+      bundle,
+      total,
+    };
     // Simulated submit
+    void order;
     await new Promise((r) => setTimeout(r, 1200));
     setSubmitting(false);
     navigate({ to: "/", search: {} as never });
@@ -144,19 +165,24 @@ function CheckoutPage() {
               <SectionHeader number={1} title="Delivery" italic="Information" right={<RequiredLabel />} />
 
               <FieldRow>
-                <Field label="Country" required>
-                  <select value={form.country} onChange={(e) => update("country", e.target.value)} className="ck-input">
-                    <option>Philippines</option>
-                  </select>
-                </Field>
-              </FieldRow>
-
-              <FieldRow cols={2}>
-                <Field label="First Name" required>
-                  <input className="ck-input" required value={form.firstName} onChange={(e) => update("firstName", e.target.value)} />
-                </Field>
-                <Field label="Last Name" required>
-                  <input className="ck-input" required value={form.lastName} onChange={(e) => update("lastName", e.target.value)} />
+                <Field label="Full Name" required>
+                  <input
+                    className="ck-input"
+                    required
+                    placeholder="Juan Dela Cruz"
+                    value={form.fullName}
+                    onChange={(e) => {
+                      update("fullName", e.target.value);
+                      if (fullNameError) setFullNameError(null);
+                    }}
+                    onBlur={(e) => {
+                      const v = e.target.value.trim();
+                      if (v && !/\s/.test(v)) setFullNameError("Please enter your full name (first and last)");
+                    }}
+                  />
+                  {fullNameError && (
+                    <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{fullNameError}</div>
+                  )}
                 </Field>
               </FieldRow>
 
@@ -222,55 +248,24 @@ function CheckoutPage() {
             <SectionCard>
               <SectionHeader number={2} title="Payment" italic="Method" right={
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>
-                  <Lock size={11} /> Secure
+                  <Truck size={11} /> Cash on Delivery
                 </span>
               } />
 
               <PaymentCard
-                selected={payment === "cod"}
-                onClick={() => setPayment("cod")}
+                selected
+                onClick={() => {}}
                 icon={<Truck size={20} color="#B8955A" />}
                 title={<>Cash on <em style={{ color: "#DC2627", fontStyle: "italic" }}>Delivery</em> (COD)</>}
                 subtitle="Pay when you receive your order"
               />
-              <PaymentCard
-                selected={payment === "qr"}
-                onClick={() => setPayment("qr")}
-                icon={<ShieldCheck size={20} color="#B8955A" />}
-                title={<>Bank <em style={{ color: "#DC2627", fontStyle: "italic" }}>Transfer</em> (QR Code)</>}
-                subtitle="Pay via GCash, Maya, or InstaPay"
-                badge="MOST POPULAR"
-              />
-              <PaymentCard
-                selected={payment === "card"}
-                onClick={() => setPayment("card")}
-                icon={<CreditCard size={20} color="#B8955A" />}
-                title="Credit or Debit Card"
-                subtitle="Visa, Mastercard, JCB"
-                logos
-              >
-                {payment === "card" && (
-                  <div style={{ marginTop: 16, display: "grid", gap: 12 }}>
-                    <Field label="Card Number" required>
-                      <input className="ck-input" placeholder="1234 5678 9012 3456" value={form.cardNumber} onChange={(e) => update("cardNumber", e.target.value)} />
-                    </Field>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      <Field label="Expiration" required>
-                        <input className="ck-input" placeholder="MM / YY" value={form.cardExp} onChange={(e) => update("cardExp", e.target.value)} />
-                      </Field>
-                      <Field label="CVV" required>
-                        <input className="ck-input" placeholder="123" value={form.cardCvv} onChange={(e) => update("cardCvv", e.target.value)} />
-                      </Field>
-                    </div>
-                    <Field label="Cardholder Name" required>
-                      <input className="ck-input" value={form.cardName} onChange={(e) => update("cardName", e.target.value)} />
-                    </Field>
-                  </div>
-                )}
-              </PaymentCard>
+
+              <div style={{ marginTop: 12, fontSize: 12, fontStyle: "italic", color: "#B8955A" }}>
+                We'll text you when your order is ready for delivery.
+              </div>
 
               <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontStyle: "italic", color: "#9A8880" }}>
-                <Lock size={12} /> All transactions are secure and encrypted via SSL
+                <Lock size={12} /> Your delivery information is encrypted and never shared. ✓
               </div>
             </SectionCard>
 
