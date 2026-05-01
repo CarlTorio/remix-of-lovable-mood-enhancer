@@ -34,6 +34,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,16 +55,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Hide navbar when hero section has scrolled out of view (only on home)
+  // Track hero visibility — drives navbar transparency and auto-hide on home
   useEffect(() => {
     if (!isHome) {
       setHidden(false);
+      setHeroInView(false);
       return;
     }
     const hero = document.getElementById("top");
     if (!hero) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setHidden(!entry.isIntersecting),
+      ([entry]) => {
+        setHidden(!entry.isIntersecting);
+        setHeroInView(entry.isIntersecting);
+      },
       { threshold: 0, rootMargin: "0px" },
     );
     observer.observe(hero);
@@ -89,14 +94,16 @@ export function Navbar() {
     }
   };
 
+  const transparent = isHome && heroInView && !scrolled;
+
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-500 ${
         hidden ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
       } ${
-        scrolled
-          ? "bg-[var(--color-noir)]/95 backdrop-blur-md border-b border-white/[0.06]"
-          : "bg-transparent border-b border-transparent"
+        transparent
+          ? "bg-transparent border-b border-transparent"
+          : "bg-[var(--color-noir)]/95 backdrop-blur-md border-b border-white/[0.06]"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-3">
