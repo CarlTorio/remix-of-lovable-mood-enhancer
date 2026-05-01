@@ -55,16 +55,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Hide navbar when hero section has scrolled out of view (only on home)
+  // Track hero visibility — drives navbar transparency and auto-hide on home
   useEffect(() => {
     if (!isHome) {
       setHidden(false);
+      setHeroInView(false);
       return;
     }
     const hero = document.getElementById("top");
     if (!hero) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setHidden(!entry.isIntersecting),
+      ([entry]) => {
+        setHidden(!entry.isIntersecting);
+        setHeroInView(entry.isIntersecting);
+      },
       { threshold: 0, rootMargin: "0px" },
     );
     observer.observe(hero);
