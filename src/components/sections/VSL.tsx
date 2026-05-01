@@ -28,6 +28,16 @@ export function VSL() {
   const [ready, setReady] = useState(false);
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [controlsVisible, setControlsVisible] = useState(false);
+  const hideControlsTimer = useRef<number | null>(null);
+
+  const showControls = () => {
+    setControlsVisible(true);
+    if (hideControlsTimer.current) window.clearTimeout(hideControlsTimer.current);
+    hideControlsTimer.current = window.setTimeout(() => {
+      setControlsVisible(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     const init = () => {
@@ -117,6 +127,7 @@ export function VSL() {
     p.playVideo();
     setMuted(false);
     setPlaying(true);
+    showControls();
   };
 
   const togglePlay = () => {
@@ -175,7 +186,11 @@ export function VSL() {
               border: "0.5px solid color-mix(in oklab, var(--color-gold) 22%, transparent)",
             }}
           >
-            <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-noir)]">
+            <div
+              className="relative aspect-video w-full overflow-hidden bg-[var(--color-noir)]"
+              onClick={() => { if (!muted) showControls(); }}
+              onTouchStart={() => { if (!muted) showControls(); }}
+            >
               <div
                 ref={containerRef}
                 className="pointer-events-none absolute inset-0 block h-full w-full bg-[var(--color-noir)] [&>iframe]:absolute [&>iframe]:inset-0 [&>iframe]:block [&>iframe]:h-full [&>iframe]:w-full [&>iframe]:border-0 [&>iframe]:bg-[var(--color-noir)] [&>iframe]:object-contain"
@@ -205,7 +220,7 @@ export function VSL() {
 
             {/* Custom controls bar */}
             {ready && (
-              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 translate-y-2 group-hover/vsl:opacity-100 group-hover/vsl:translate-y-0 focus-within:opacity-100 focus-within:translate-y-0 transition-all duration-300">
+              <div className={`absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 group-hover/vsl:opacity-100 group-hover/vsl:translate-y-0 focus-within:opacity-100 focus-within:translate-y-0 ${controlsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
                 {/* Progress bar */}
                 <div className="relative h-1 mb-3 group">
                   <div className="absolute inset-0 rounded-full bg-white/25" />
