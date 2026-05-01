@@ -296,10 +296,10 @@ export function PainPoints() {
               const mobileHeight = isActive ? "400px" : "200px";
 
               const imageFilter = isActive
-                ? "brightness(1.3) contrast(1.2) saturate(1.1)"
+                ? "brightness(0.95) contrast(1.15) saturate(0.95) sepia(0.05) hue-rotate(-5deg)"
                 : isHover
-                  ? "brightness(1.18) contrast(1.18) saturate(1.08)"
-                  : "brightness(1.1) contrast(1.15) saturate(1.05)";
+                  ? "brightness(0.9) contrast(1.12) saturate(0.93) sepia(0.05) hue-rotate(-5deg)"
+                  : "brightness(0.85) contrast(1.1) saturate(0.92) sepia(0.05) hue-rotate(-5deg)";
 
               const imageTransform =
                 isHover && !isActive ? "scale(1.02)" : "scale(1)";
