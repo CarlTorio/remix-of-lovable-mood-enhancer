@@ -1,7 +1,27 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-const logo = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Final%20Lovable%20Logo%20copy.png";
+
+function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <span
+      aria-label="LOVABLE"
+      className={`inline-flex items-center font-extrabold tracking-tight text-[var(--color-brand-red)] leading-none ${className}`}
+      style={{ fontFamily: '"Playfair Display", serif', letterSpacing: "-0.02em" }}
+    >
+      <span>LO</span>
+      <Heart
+        className="mx-[1px]"
+        size="0.95em"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        aria-hidden="true"
+      />
+      <span>ABLE</span>
+    </span>
+  );
+}
 
 const links = [
   { label: "Home", hash: "" },
