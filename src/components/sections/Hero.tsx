@@ -150,7 +150,7 @@ export function Hero() {
         <div className="max-w-xl w-full text-left">
           <Reveal>
             <p
-              className="uppercase mb-6"
+              className="uppercase mb-3 md:mb-6"
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontSize: "11px",
@@ -164,14 +164,13 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1
-              className="hero-headline-mobile text-[40px] md:text-[56px] lg:text-[72px]"
+              className="hero-headline-mobile text-[40px] md:text-[56px] lg:text-[72px] mb-3 md:!mb-5"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 color: "#F2EAE0",
                 lineHeight: 1.1,
                 fontWeight: 400,
                 letterSpacing: "-0.025em",
-                marginBottom: "20px",
               }}
             >
               Feel That{" "}
@@ -181,14 +180,13 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.2}>
             <p
-              className="text-[17px] md:text-[20px] lg:text-[22px]"
+              className="text-[17px] md:text-[20px] lg:text-[22px] mb-5 md:!mb-9"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 fontStyle: "italic",
                 color: "rgba(242, 234, 224, 0.78)",
                 lineHeight: 1.5,
                 maxWidth: "540px",
-                marginBottom: "36px",
               }}
             >
               A natural blend for couples ready to want each other like the{" "}
@@ -196,10 +194,10 @@ export function Hero() {
             </p>
           </Reveal>
           <Reveal delay={0.3}>
-            <div className="flex flex-col items-start gap-5 sm:gap-6">
+            <div className="flex flex-col items-start gap-3 sm:gap-6">
               <div className="flex flex-col items-start">
                 <span
-                  className="uppercase"
+                  className="uppercase mb-2 md:!mb-4"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -208,7 +206,6 @@ export function Hero() {
                     fontSize: "11px",
                     letterSpacing: "2.5px",
                     color: "#B8955A",
-                    marginBottom: "16px",
                   }}
                 >
                   <span
