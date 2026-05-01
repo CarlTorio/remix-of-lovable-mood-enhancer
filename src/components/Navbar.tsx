@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 
 function Wordmark({ className = "" }: { className?: string }) {
