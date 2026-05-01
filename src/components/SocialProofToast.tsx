@@ -32,10 +32,27 @@ export function SocialProofToast() {
   const [isMobile, setIsMobile] = useState(false);
   const [urgencyDismissed, setUrgencyDismissed] = useState(false);
   const [onCheckout, setOnCheckout] = useState(false);
+  const [heroInView, setHeroInView] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     setOnCheckout(window.location.pathname.startsWith("/checkout"));
+  }, []);
+
+  // Track hero visibility — used to hide the toast on mobile while hero is on screen
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hero = document.getElementById("top");
+    if (!hero) {
+      setHeroInView(false);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" }
+    );
+    io.observe(hero);
+    return () => io.disconnect();
   }, []);
 
   // Mobile detection
