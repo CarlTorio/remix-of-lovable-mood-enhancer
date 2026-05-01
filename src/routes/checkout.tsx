@@ -465,13 +465,21 @@ function TrustStrip() {
       className="ck-trust"
     >
       {items.map((it) => (
-        <div key={it} style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
-          <span style={{ color: "#B8955A", fontSize: 12 }}>◊</span>
-          <span style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#F2EAE0" }}>{it}</span>
+        <div key={it} className="ck-trust-item" style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+          <span style={{ color: "#B8955A", fontSize: 12, flexShrink: 0 }}>◊</span>
+          <span className="ck-trust-label" style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#F2EAE0", lineHeight: 1.3 }}>{it}</span>
         </div>
       ))}
       <style>{`
-        @media (max-width: 700px) { .ck-trust { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) {
+          .ck-trust {
+            grid-template-columns: repeat(2, 1fr) !important;
+            padding: 14px 12px !important;
+            gap: 10px !important;
+          }
+          .ck-trust-item { justify-content: flex-start !important; padding: 6px 4px; }
+          .ck-trust-label { font-size: 9.5px !important; letter-spacing: 1.1px !important; }
+        }
       `}</style>
     </div>
   );
