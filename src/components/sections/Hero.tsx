@@ -357,7 +357,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 animate-[bounce-slow_2s_ease-in-out_infinite] text-[var(--color-ivory)]/50">
+      <div className="hero-scroll-cue absolute bottom-7 left-1/2 -translate-x-1/2 z-10 animate-[bounce-slow_2s_ease-in-out_infinite] text-[var(--color-ivory)]/50">
         <ChevronDown size={28} />
       </div>
     </section>
