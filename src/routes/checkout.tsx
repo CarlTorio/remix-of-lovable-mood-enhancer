@@ -395,39 +395,78 @@ function CheckoutPage() {
               </FieldRow>
 
               <FieldRow>
-                <Field label="Complete Address" required>
-                  <input className="ck-input" required placeholder="House #, Street, Subdivision" value={form.address} onChange={(e) => update("address", e.target.value)} />
+                <Field label="Region" required>
+                  <AddressCombobox
+                    label="Region"
+                    placeholder="Select region"
+                    value={form.regionCode}
+                    onChange={(c, l) => { setRegion(c, l); setAddressErrors((e) => ({ ...e, region: undefined })); }}
+                    options={regionOptions}
+                    loading={loadingRegions}
+                    required
+                  />
+                  {addressErrors.region && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.region}</div>}
                 </Field>
               </FieldRow>
 
-              <FieldRow cols={3}>
-                <Field label="Region" required>
-                  <select className="ck-input" required value={form.region} onChange={(e) => update("region", e.target.value)}>
-                    <option value="">Select region</option>
-                    <option>NCR</option>
-                    <option>Region III</option>
-                    <option>Region IV-A</option>
-                    <option>Region VII</option>
-                    <option>Region XI</option>
-                  </select>
+              <FieldRow>
+                <Field label="Province" required>
+                  <AddressCombobox
+                    label="Province"
+                    placeholder={form.regionCode ? "Select province" : "Select region first"}
+                    value={form.provinceCode}
+                    onChange={(c, l) => { setProvince(c, l); setAddressErrors((e) => ({ ...e, province: undefined })); }}
+                    options={provinceOptions}
+                    disabled={!form.regionCode}
+                    loading={loadingProvinces}
+                    required
+                  />
+                  {addressErrors.province && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.province}</div>}
                 </Field>
-                <Field label="City" required>
-                  <select className="ck-input" required disabled={!form.region} value={form.city} onChange={(e) => update("city", e.target.value)}>
-                    <option value="">Select city</option>
-                    <option>Quezon City</option>
-                    <option>Makati</option>
-                    <option>Pasig</option>
-                    <option>Taguig</option>
-                    <option>Manila</option>
-                  </select>
+              </FieldRow>
+
+              <FieldRow>
+                <Field label="City / Municipality" required>
+                  <AddressCombobox
+                    label="City"
+                    placeholder={form.provinceCode ? "Search city or municipality" : "Select province first"}
+                    value={form.cityCode}
+                    onChange={(c, l) => { setCity(c, l); setAddressErrors((e) => ({ ...e, city: undefined })); }}
+                    options={cityOptions}
+                    disabled={!form.provinceCode}
+                    loading={loadingCities}
+                    required
+                  />
+                  {addressErrors.city && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.city}</div>}
                 </Field>
+              </FieldRow>
+
+              <FieldRow>
                 <Field label="Barangay" required>
-                  <select className="ck-input" required disabled={!form.city} value={form.barangay} onChange={(e) => update("barangay", e.target.value)}>
-                    <option value="">Select barangay</option>
-                    <option>Barangay 1</option>
-                    <option>Barangay 2</option>
-                    <option>Barangay 3</option>
-                  </select>
+                  <AddressCombobox
+                    label="Barangay"
+                    placeholder={form.cityCode ? "Search barangay" : "Select city first"}
+                    value={form.barangayCode}
+                    onChange={(c, l) => { setBarangay(c, l); setAddressErrors((e) => ({ ...e, barangay: undefined })); }}
+                    options={barangayOptions}
+                    disabled={!form.cityCode}
+                    loading={loadingBarangays}
+                    required
+                  />
+                  {addressErrors.barangay && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.barangay}</div>}
+                </Field>
+              </FieldRow>
+
+              <FieldRow>
+                <Field label="Complete Address" required sublabel="House #, Street, Subdivision">
+                  <input
+                    className="ck-input"
+                    required
+                    placeholder="e.g., 123 Mabuhay St., Subdivision Heights"
+                    value={form.address}
+                    onChange={(e) => { update("address", e.target.value); if (addressErrors.address) setAddressErrors((er) => ({ ...er, address: undefined })); }}
+                  />
+                  {addressErrors.address && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.address}</div>}
                 </Field>
               </FieldRow>
 
