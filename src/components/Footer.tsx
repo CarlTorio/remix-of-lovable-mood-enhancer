@@ -113,7 +113,7 @@ export function Footer() {
             <li><Link to="/" hash="faq" className="hover:text-[var(--color-brand-red)] transition-colors">FAQ</Link></li>
             <li><a href="mailto:admin@lovablecouple.shop" className="hover:text-[var(--color-brand-red)] transition-colors">Contact</a></li>
             <li><a href="#" className="hover:text-[var(--color-brand-red)] transition-colors">Shipping & Returns</a></li>
-            <li><a href="#" className="hover:text-[var(--color-brand-red)] transition-colors">Track Your Order</a></li>
+            <li><a href="#" className="hover:text-[var(--color-brand-red)] transition-colors">​</a></li>
           </ul>
         </div>
 
