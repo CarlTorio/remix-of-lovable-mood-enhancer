@@ -231,6 +231,10 @@ function CheckoutPage() {
     }
   };
 
+  const [addressErrors, setAddressErrors] = useState<{
+    region?: string; province?: string; city?: string; barangay?: string; address?: string;
+  }>({});
+
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
@@ -241,9 +245,25 @@ function CheckoutPage() {
       return;
     }
 
+    const errs: typeof addressErrors = {};
+    if (!form.regionCode) errs.region = "Please select your region";
+    if (!form.provinceCode) errs.province = "Please select your province";
+    if (!form.cityCode) errs.city = "Please select your city or municipality";
+    if (!form.barangayCode) errs.barangay = "Please select your barangay";
+    if (form.address.trim().length < 5) errs.address = "Please enter your complete address (House #, Street, Subdivision)";
+    setAddressErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
     setSubmitting(true);
     const [firstName, ...rest] = fullName.split(/\s+/);
     const lastName = rest.join(" ");
+    const fullAddress = [
+      form.address.trim(),
+      `Brgy. ${form.barangay}`,
+      form.city,
+      form.province,
+      form.region,
+    ].filter(Boolean).join(", ");
     const order = {
       country: "Philippines",
       fullName,
@@ -252,9 +272,11 @@ function CheckoutPage() {
       phone: form.phone,
       email: form.email,
       address: form.address,
-      region: form.region,
-      city: form.city,
-      barangay: form.barangay,
+      region: { code: form.regionCode, name: form.region },
+      province: { code: form.provinceCode, name: form.province },
+      city: { code: form.cityCode, name: form.city },
+      barangay: { code: form.barangayCode, name: form.barangay },
+      fullAddress,
       paymentMethod: "COD",
       variant,
       bundle,
