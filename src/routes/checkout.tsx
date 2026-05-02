@@ -398,6 +398,47 @@ function CheckoutPage() {
               </FieldRow>
 
               <FieldRow>
+                <Field label="Complete Address" required sublabel="House #, Street, Subdivision">
+                  <input
+                    className="ck-input"
+                    required
+                    placeholder="e.g., 123 Mabuhay St., Subdivision Heights"
+                    value={form.address}
+                    onChange={(e) => { update("address", e.target.value); if (addressErrors.address) setAddressErrors((er) => ({ ...er, address: undefined })); }}
+                  />
+                  {addressErrors.address && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.address}</div>}
+                </Field>
+              </FieldRow>
+
+              <FieldRow>
+                <Field label="Nearest Landmark" sublabel="optional">
+                  <input
+                    className="ck-input"
+                    type="text"
+                    maxLength={200}
+                    placeholder="e.g., near 7-Eleven, beside Mercury Drug, behind the church"
+                    value={form.landmark}
+                    onChange={(e) => update("landmark", e.target.value)}
+                  />
+                  <div
+                    style={{
+                      marginTop: 6,
+                      fontSize: 11,
+                      fontStyle: "italic",
+                      color: "rgba(154, 136, 128, 0.7)",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontFamily: "Montserrat, sans-serif",
+                    }}
+                  >
+                    <span aria-hidden style={{ color: "#B8955A", fontSize: 8 }}>◊</span>
+                    Helps our delivery riders find you faster.
+                  </div>
+                </Field>
+              </FieldRow>
+
+              <FieldRow>
                 <Field label="Region" required>
                   <AddressCombobox
                     label="Region"
@@ -457,19 +498,6 @@ function CheckoutPage() {
                     required
                   />
                   {addressErrors.barangay && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.barangay}</div>}
-                </Field>
-              </FieldRow>
-
-              <FieldRow>
-                <Field label="Complete Address" required sublabel="House #, Street, Subdivision">
-                  <input
-                    className="ck-input"
-                    required
-                    placeholder="e.g., 123 Mabuhay St., Subdivision Heights"
-                    value={form.address}
-                    onChange={(e) => { update("address", e.target.value); if (addressErrors.address) setAddressErrors((er) => ({ ...er, address: undefined })); }}
-                  />
-                  {addressErrors.address && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.address}</div>}
                 </Field>
               </FieldRow>
 
