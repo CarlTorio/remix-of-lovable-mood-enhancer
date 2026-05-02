@@ -278,6 +278,7 @@ function CheckoutPage() {
       province: { code: form.provinceCode, name: form.province },
       city: { code: form.cityCode, name: form.city },
       barangay: { code: form.barangayCode, name: form.barangay },
+      landmark,
       fullAddress,
       paymentMethod: "COD",
       variant,
