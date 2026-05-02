@@ -1,6 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Lock, Truck, CheckCircle2, ArrowLeft, Star, Heart } from "lucide-react";
+import { AddressCombobox, type ComboOption } from "@/components/AddressCombobox";
+import {
+  loadRegions,
+  provincesByRegion,
+  citiesByProvince,
+  barangaysByCity,
+  type Region,
+  type Province,
+  type City,
+  type Barangay,
+} from "@/lib/psgc";
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
@@ -73,8 +84,13 @@ function CheckoutPage() {
     phone: "",
     email: "",
     address: "",
+    regionCode: "",
     region: "",
+    provinceCode: "",
+    province: "",
+    cityCode: "",
     city: "",
+    barangayCode: "",
     barangay: "",
     saveInfo: true,
   });
@@ -92,6 +108,105 @@ function CheckoutPage() {
     if (typeof window === "undefined") return;
     sessionStorage.setItem("lovable-checkout-form", JSON.stringify(form));
   }, [form]);
+
+  // ====== PSGC cascading data ======
+  const [regions, setRegions] = useState<Region[]>([]);
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
+  const [barangays, setBarangays] = useState<Barangay[]>([]);
+  const [loadingRegions, setLoadingRegions] = useState(false);
+  const [loadingProvinces, setLoadingProvinces] = useState(false);
+  const [loadingCities, setLoadingCities] = useState(false);
+  const [loadingBarangays, setLoadingBarangays] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingRegions(true);
+    loadRegions()
+      .then((r) => { if (!cancelled) setRegions(r); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingRegions(false); });
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (!form.regionCode) { setProvinces([]); return; }
+    let cancelled = false;
+    setLoadingProvinces(true);
+    provincesByRegion(form.regionCode)
+      .then((p) => { if (!cancelled) setProvinces(p); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingProvinces(false); });
+    return () => { cancelled = true; };
+  }, [form.regionCode]);
+
+  useEffect(() => {
+    if (!form.provinceCode) { setCities([]); return; }
+    let cancelled = false;
+    setLoadingCities(true);
+    citiesByProvince(form.provinceCode)
+      .then((c) => { if (!cancelled) setCities(c); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingCities(false); });
+    return () => { cancelled = true; };
+  }, [form.provinceCode]);
+
+  useEffect(() => {
+    if (!form.cityCode) { setBarangays([]); return; }
+    let cancelled = false;
+    setLoadingBarangays(true);
+    barangaysByCity(form.cityCode)
+      .then((b) => { if (!cancelled) setBarangays(b); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingBarangays(false); });
+    return () => { cancelled = true; };
+  }, [form.cityCode]);
+
+  const regionOptions: ComboOption[] = useMemo(
+    () => regions.map((r) => ({ value: r.region_code, label: r.region_name })),
+    [regions],
+  );
+  const provinceOptions: ComboOption[] = useMemo(
+    () => provinces.map((p) => ({ value: p.province_code, label: p.province_name })),
+    [provinces],
+  );
+  const cityOptions: ComboOption[] = useMemo(
+    () => cities.map((c) => ({ value: c.city_code, label: c.city_name })),
+    [cities],
+  );
+  const barangayOptions: ComboOption[] = useMemo(
+    () => barangays.map((b) => ({ value: b.brgy_code, label: b.brgy_name })),
+    [barangays],
+  );
+
+  const setRegion = (code: string, label: string) => {
+    setForm((f) => ({
+      ...f,
+      regionCode: code, region: label,
+      provinceCode: "", province: "",
+      cityCode: "", city: "",
+      barangayCode: "", barangay: "",
+    }));
+  };
+  const setProvince = (code: string, label: string) => {
+    setForm((f) => ({
+      ...f,
+      provinceCode: code, province: label,
+      cityCode: "", city: "",
+      barangayCode: "", barangay: "",
+    }));
+  };
+  const setCity = (code: string, label: string) => {
+    setForm((f) => ({
+      ...f,
+      cityCode: code, city: label,
+      barangayCode: "", barangay: "",
+    }));
+  };
+  const setBarangay = (code: string, label: string) => {
+    setForm((f) => ({ ...f, barangayCode: code, barangay: label }));
+  };
+
 
   const subtotal = item.baseEach * (variant === "couples" ? Number(bundle) : Number(bundle));
   // Bundle savings = subtotal - price
@@ -116,6 +231,10 @@ function CheckoutPage() {
     }
   };
 
+  const [addressErrors, setAddressErrors] = useState<{
+    region?: string; province?: string; city?: string; barangay?: string; address?: string;
+  }>({});
+
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
@@ -126,9 +245,25 @@ function CheckoutPage() {
       return;
     }
 
+    const errs: typeof addressErrors = {};
+    if (!form.regionCode) errs.region = "Please select your region";
+    if (!form.provinceCode) errs.province = "Please select your province";
+    if (!form.cityCode) errs.city = "Please select your city or municipality";
+    if (!form.barangayCode) errs.barangay = "Please select your barangay";
+    if (form.address.trim().length < 5) errs.address = "Please enter your complete address (House #, Street, Subdivision)";
+    setAddressErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
     setSubmitting(true);
     const [firstName, ...rest] = fullName.split(/\s+/);
     const lastName = rest.join(" ");
+    const fullAddress = [
+      form.address.trim(),
+      `Brgy. ${form.barangay}`,
+      form.city,
+      form.province,
+      form.region,
+    ].filter(Boolean).join(", ");
     const order = {
       country: "Philippines",
       fullName,
@@ -137,9 +272,11 @@ function CheckoutPage() {
       phone: form.phone,
       email: form.email,
       address: form.address,
-      region: form.region,
-      city: form.city,
-      barangay: form.barangay,
+      region: { code: form.regionCode, name: form.region },
+      province: { code: form.provinceCode, name: form.province },
+      city: { code: form.cityCode, name: form.city },
+      barangay: { code: form.barangayCode, name: form.barangay },
+      fullAddress,
       paymentMethod: "COD",
       variant,
       bundle,
@@ -258,39 +395,78 @@ function CheckoutPage() {
               </FieldRow>
 
               <FieldRow>
-                <Field label="Complete Address" required>
-                  <input className="ck-input" required placeholder="House #, Street, Subdivision" value={form.address} onChange={(e) => update("address", e.target.value)} />
+                <Field label="Region" required>
+                  <AddressCombobox
+                    label="Region"
+                    placeholder="Select region"
+                    value={form.regionCode}
+                    onChange={(c, l) => { setRegion(c, l); setAddressErrors((e) => ({ ...e, region: undefined })); }}
+                    options={regionOptions}
+                    loading={loadingRegions}
+                    required
+                  />
+                  {addressErrors.region && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.region}</div>}
                 </Field>
               </FieldRow>
 
-              <FieldRow cols={3}>
-                <Field label="Region" required>
-                  <select className="ck-input" required value={form.region} onChange={(e) => update("region", e.target.value)}>
-                    <option value="">Select region</option>
-                    <option>NCR</option>
-                    <option>Region III</option>
-                    <option>Region IV-A</option>
-                    <option>Region VII</option>
-                    <option>Region XI</option>
-                  </select>
+              <FieldRow>
+                <Field label="Province" required>
+                  <AddressCombobox
+                    label="Province"
+                    placeholder={form.regionCode ? "Select province" : "Select region first"}
+                    value={form.provinceCode}
+                    onChange={(c, l) => { setProvince(c, l); setAddressErrors((e) => ({ ...e, province: undefined })); }}
+                    options={provinceOptions}
+                    disabled={!form.regionCode}
+                    loading={loadingProvinces}
+                    required
+                  />
+                  {addressErrors.province && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.province}</div>}
                 </Field>
-                <Field label="City" required>
-                  <select className="ck-input" required disabled={!form.region} value={form.city} onChange={(e) => update("city", e.target.value)}>
-                    <option value="">Select city</option>
-                    <option>Quezon City</option>
-                    <option>Makati</option>
-                    <option>Pasig</option>
-                    <option>Taguig</option>
-                    <option>Manila</option>
-                  </select>
+              </FieldRow>
+
+              <FieldRow>
+                <Field label="City / Municipality" required>
+                  <AddressCombobox
+                    label="City"
+                    placeholder={form.provinceCode ? "Search city or municipality" : "Select province first"}
+                    value={form.cityCode}
+                    onChange={(c, l) => { setCity(c, l); setAddressErrors((e) => ({ ...e, city: undefined })); }}
+                    options={cityOptions}
+                    disabled={!form.provinceCode}
+                    loading={loadingCities}
+                    required
+                  />
+                  {addressErrors.city && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.city}</div>}
                 </Field>
+              </FieldRow>
+
+              <FieldRow>
                 <Field label="Barangay" required>
-                  <select className="ck-input" required disabled={!form.city} value={form.barangay} onChange={(e) => update("barangay", e.target.value)}>
-                    <option value="">Select barangay</option>
-                    <option>Barangay 1</option>
-                    <option>Barangay 2</option>
-                    <option>Barangay 3</option>
-                  </select>
+                  <AddressCombobox
+                    label="Barangay"
+                    placeholder={form.cityCode ? "Search barangay" : "Select city first"}
+                    value={form.barangayCode}
+                    onChange={(c, l) => { setBarangay(c, l); setAddressErrors((e) => ({ ...e, barangay: undefined })); }}
+                    options={barangayOptions}
+                    disabled={!form.cityCode}
+                    loading={loadingBarangays}
+                    required
+                  />
+                  {addressErrors.barangay && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.barangay}</div>}
+                </Field>
+              </FieldRow>
+
+              <FieldRow>
+                <Field label="Complete Address" required sublabel="House #, Street, Subdivision">
+                  <input
+                    className="ck-input"
+                    required
+                    placeholder="e.g., 123 Mabuhay St., Subdivision Heights"
+                    value={form.address}
+                    onChange={(e) => { update("address", e.target.value); if (addressErrors.address) setAddressErrors((er) => ({ ...er, address: undefined })); }}
+                  />
+                  {addressErrors.address && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.address}</div>}
                 </Field>
               </FieldRow>
 
