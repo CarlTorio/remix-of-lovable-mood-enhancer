@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Heart, Check } from "lucide-react";
+import { Heart, Check, Download } from "lucide-react";
+import manualCover from "@/assets/reconnection-manual-cover.jpg";
 
 type ThankYouSearch = {
   orderId: string;
