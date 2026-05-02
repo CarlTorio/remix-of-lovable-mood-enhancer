@@ -109,6 +109,105 @@ function CheckoutPage() {
     sessionStorage.setItem("lovable-checkout-form", JSON.stringify(form));
   }, [form]);
 
+  // ====== PSGC cascading data ======
+  const [regions, setRegions] = useState<Region[]>([]);
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
+  const [barangays, setBarangays] = useState<Barangay[]>([]);
+  const [loadingRegions, setLoadingRegions] = useState(false);
+  const [loadingProvinces, setLoadingProvinces] = useState(false);
+  const [loadingCities, setLoadingCities] = useState(false);
+  const [loadingBarangays, setLoadingBarangays] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingRegions(true);
+    loadRegions()
+      .then((r) => { if (!cancelled) setRegions(r); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingRegions(false); });
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (!form.regionCode) { setProvinces([]); return; }
+    let cancelled = false;
+    setLoadingProvinces(true);
+    provincesByRegion(form.regionCode)
+      .then((p) => { if (!cancelled) setProvinces(p); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingProvinces(false); });
+    return () => { cancelled = true; };
+  }, [form.regionCode]);
+
+  useEffect(() => {
+    if (!form.provinceCode) { setCities([]); return; }
+    let cancelled = false;
+    setLoadingCities(true);
+    citiesByProvince(form.provinceCode)
+      .then((c) => { if (!cancelled) setCities(c); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingCities(false); });
+    return () => { cancelled = true; };
+  }, [form.provinceCode]);
+
+  useEffect(() => {
+    if (!form.cityCode) { setBarangays([]); return; }
+    let cancelled = false;
+    setLoadingBarangays(true);
+    barangaysByCity(form.cityCode)
+      .then((b) => { if (!cancelled) setBarangays(b); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingBarangays(false); });
+    return () => { cancelled = true; };
+  }, [form.cityCode]);
+
+  const regionOptions: ComboOption[] = useMemo(
+    () => regions.map((r) => ({ value: r.region_code, label: r.region_name })),
+    [regions],
+  );
+  const provinceOptions: ComboOption[] = useMemo(
+    () => provinces.map((p) => ({ value: p.province_code, label: p.province_name })),
+    [provinces],
+  );
+  const cityOptions: ComboOption[] = useMemo(
+    () => cities.map((c) => ({ value: c.city_code, label: c.city_name })),
+    [cities],
+  );
+  const barangayOptions: ComboOption[] = useMemo(
+    () => barangays.map((b) => ({ value: b.brgy_code, label: b.brgy_name })),
+    [barangays],
+  );
+
+  const setRegion = (code: string, label: string) => {
+    setForm((f) => ({
+      ...f,
+      regionCode: code, region: label,
+      provinceCode: "", province: "",
+      cityCode: "", city: "",
+      barangayCode: "", barangay: "",
+    }));
+  };
+  const setProvince = (code: string, label: string) => {
+    setForm((f) => ({
+      ...f,
+      provinceCode: code, province: label,
+      cityCode: "", city: "",
+      barangayCode: "", barangay: "",
+    }));
+  };
+  const setCity = (code: string, label: string) => {
+    setForm((f) => ({
+      ...f,
+      cityCode: code, city: label,
+      barangayCode: "", barangay: "",
+    }));
+  };
+  const setBarangay = (code: string, label: string) => {
+    setForm((f) => ({ ...f, barangayCode: code, barangay: label }));
+  };
+
+
   const subtotal = item.baseEach * (variant === "couples" ? Number(bundle) : Number(bundle));
   // Bundle savings = subtotal - price
   const bundleSavings = Math.max(0, subtotal - item.price);
