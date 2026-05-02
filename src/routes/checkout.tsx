@@ -84,8 +84,13 @@ function CheckoutPage() {
     phone: "",
     email: "",
     address: "",
+    regionCode: "",
     region: "",
+    provinceCode: "",
+    province: "",
+    cityCode: "",
     city: "",
+    barangayCode: "",
     barangay: "",
     saveInfo: true,
   });
