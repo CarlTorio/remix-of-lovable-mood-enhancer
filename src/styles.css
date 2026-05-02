@@ -620,6 +620,127 @@ h1, h2 {
   100% { left: 150%; }
 }
 
+/* ============================================
+   .btn-shine — Global metallic shine system
+   Additive class. Compose with any existing button class.
+   Variants: .btn-primary, .btn-glass, .btn-gold, .btn-subtle
+   ============================================ */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  will-change: transform;
+}
+
+.btn-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 25%,
+    rgba(255, 255, 255, 0.10) 35%,
+    rgba(255, 255, 255, 0.50) 50%,
+    rgba(255, 255, 255, 0.10) 65%,
+    transparent 75%,
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  animation: shine-sweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, left;
+}
+
+.btn-shine > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* PRIMARY — bright shine + ambient red glow */
+.btn-shine.btn-shine-primary::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 25%,
+    rgba(255, 255, 255, 0.12) 35%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.12) 65%,
+    transparent 75%,
+    transparent 100%
+  );
+}
+
+/* GLASS — moderate shine for outlined buttons */
+.btn-shine.btn-shine-glass::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 25%,
+    rgba(255, 255, 255, 0.06) 35%,
+    rgba(255, 255, 255, 0.30) 50%,
+    rgba(255, 255, 255, 0.06) 65%,
+    transparent 75%,
+    transparent 100%
+  );
+}
+
+/* GOLD — warm gold shine */
+.btn-shine.btn-shine-gold::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 25%,
+    rgba(255, 224, 168, 0.10) 35%,
+    rgba(255, 224, 168, 0.40) 50%,
+    rgba(255, 224, 168, 0.10) 65%,
+    transparent 75%,
+    transparent 100%
+  );
+}
+
+/* SUBTLE — gentle slow shine for tabs, cards, accordions */
+.btn-shine.btn-shine-subtle::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.04) 60%,
+    transparent 70%,
+    transparent 100%
+  );
+  animation-duration: 5s;
+}
+
+/* Hover acceleration (universal) */
+.btn-shine:hover::before {
+  animation-duration: 1s;
+}
+
+/* Stagger helpers — apply to button-group containers */
+.btn-shine-group > .btn-shine:nth-child(1)::before { animation-delay: 0s; }
+.btn-shine-group > .btn-shine:nth-child(2)::before { animation-delay: 1.2s; }
+.btn-shine-group > .btn-shine:nth-child(3)::before { animation-delay: 2.4s; }
+.btn-shine-group > .btn-shine:nth-child(4)::before { animation-delay: 0.6s; }
+.btn-shine-group > .btn-shine:nth-child(5)::before { animation-delay: 1.8s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-shine::before { animation: none; display: none; }
+  .btn-shine:hover { transform: none; }
+}
+
+@media (max-width: 768px) {
+  .btn-shine::before { animation-duration: 3s; }
+  .btn-shine:active::before { animation-duration: 0.8s; }
+}
+
+
 .btn-pulse-shine {
   position: relative;
   overflow: hidden;
