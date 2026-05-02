@@ -164,7 +164,7 @@ function ThankYouPage() {
           {firstName ? <>Salamat, <em>{firstName}</em>.</> : <>Order received. <em>Thank you.</em></>}
         </h1>
 
-        <p className="thank-you-subhead">Your order is in. We'll text you when it's on the way.</p>
+        <p className="thank-you-subhead">Your order is in. We'll inform you when it's on the way.</p>
 
         <div className="order-reference">
           <p className="order-reference-label">Order Reference</p>
@@ -230,8 +230,8 @@ function ThankYouPage() {
             <li className="expectation-item">
               <span className="expectation-number">02</span>
               <div className="expectation-content">
-                <p className="expectation-step-title">We'll text you when it ships</p>
-                <p className="expectation-step-desc">Watch out for an SMS at your phone with tracking details.</p>
+                <p className="expectation-step-title">We'll inform you when it ships</p>
+                <p className="expectation-step-desc">We'll reach out to you with delivery details.</p>
               </div>
             </li>
             <li className="expectation-item">
