@@ -330,7 +330,7 @@ export function VSL() {
             </ul>
 
             <div className="mt-8">
-              <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
+              <Link to="/shop" className="btn-primary btn-shine btn-shine-primary"><span>Get LOVABLE Now →</span></Link>
             </div>
           </div>
         </Reveal>

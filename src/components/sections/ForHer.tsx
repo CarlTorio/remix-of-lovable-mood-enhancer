@@ -91,7 +91,7 @@ export function ForHer() {
             </div>
 
             <div className="mt-10">
-              <Link to="/shop" search={{ variant: "her" }} className="btn-primary">Shop For Her →</Link>
+              <Link to="/shop" search={{ variant: "her" }} className="btn-primary btn-shine btn-shine-primary"><span>Shop For Her →</span></Link>
             </div>
           </Reveal>
         </div>
