@@ -8,6 +8,7 @@ import { SocialProofToast } from "@/components/SocialProofToast";
 import { StickyUrgencyBar } from "@/components/StickyUrgencyBar";
 import { Reveal } from "@/components/Reveal";
 import { setShopState, type ShopVariant } from "@/lib/shop-store";
+import { BundleBonusIndicator, BundleIncludesSection } from "@/components/shop/BundleBonus";
 
 import hero from "@/assets/hero.jpg";
 import manualCover from "@/assets/reconnection-manual-cover.jpg";
