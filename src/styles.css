@@ -841,20 +841,20 @@ h1, h2 {
   position: absolute;
   top: 0;
   left: -150%;
-  width: 80%;
+  width: 75%;
   height: 100%;
   background: linear-gradient(
     115deg,
     transparent 0%,
-    transparent 30%,
-    rgba(255, 255, 255, 0.04) 40%,
-    rgba(255, 255, 255, 0.18) 50%,
-    rgba(255, 255, 255, 0.04) 60%,
-    transparent 70%,
+    transparent 25%,
+    rgba(255, 255, 255, 0.06) 35%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.06) 65%,
+    transparent 75%,
     transparent 100%
   );
-  transform: skewX(-20deg);
-  animation: shine-sweep 4.5s ease-in-out infinite;
+  transform: skewX(-22deg);
+  animation: shine-sweep 3.5s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
 }
@@ -865,8 +865,9 @@ h1, h2 {
 }
 
 .final-cta-buttons-row .final-cta-btn:nth-child(1)::before { animation-delay: 0s; }
-.final-cta-buttons-row .final-cta-btn:nth-child(2)::before { animation-delay: 1.5s; }
-.final-cta-buttons-row .final-cta-btn:nth-child(3)::before { animation-delay: 3s; }
+.final-cta-buttons-row .final-cta-btn:nth-child(2)::before { animation-delay: 1.2s; }
+.final-cta-buttons-row .final-cta-btn:nth-child(3)::before { animation-delay: 2.4s; }
+
 
 .final-cta-btn:hover {
   transform: translateY(-2px);
