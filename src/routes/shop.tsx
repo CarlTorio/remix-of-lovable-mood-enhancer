@@ -592,6 +592,7 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
                           fontSize: 10,
                           color: "rgba(184,149,90,0.85)",
                           fontStyle: "italic",
+                          textDecoration: b.originalPrice > b.price ? "line-through" : "none",
                         }}
                       >
                         ₱{b.perDay}/day
