@@ -514,11 +514,16 @@ function CheckoutPage() {
               </div>
             </SectionCard>
 
+            {submitError && (
+              <div role="alert" style={{ marginTop: 16, padding: "12px 14px", border: "1px solid rgba(220,38,39,0.5)", background: "rgba(220,38,39,0.08)", color: "#F2EAE0", borderRadius: 8, fontSize: 12 }}>
+                {submitError}
+              </div>
+            )}
             <button
               type="submit"
               disabled={submitting}
               className="btn-pulse-shine btn-pulse-medium ck-place-order"
-              style={{ width: "100%", marginTop: 32, opacity: submitting ? 0.7 : 1 }}
+              style={{ width: "100%", marginTop: 24, opacity: submitting ? 0.7 : 1 }}
             >
               <span>
                 {submitting ? "PROCESSING..." : `PLACE ORDER · ₱${total.toLocaleString()}`}
