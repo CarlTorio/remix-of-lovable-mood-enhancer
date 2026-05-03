@@ -604,6 +604,21 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
             })}
           </div>
 
+          <p
+            style={{
+              margin: "4px 0 16px",
+              fontFamily: "Montserrat, sans-serif",
+              fontStyle: "italic",
+              fontSize: 9,
+              color: "rgba(154,136,128,0.5)",
+              textAlign: "center",
+              letterSpacing: 0.3,
+              lineHeight: 1.4,
+            }}
+          >
+            Strikethrough prices indicate suggested retail price. Actual savings may vary based on individual product purchase price.
+          </p>
+
           {/* What's included (bonus + product) for tiers 2/3 */}
           {selectedBundle.id !== "1" && (
             <BundleIncludesSection
