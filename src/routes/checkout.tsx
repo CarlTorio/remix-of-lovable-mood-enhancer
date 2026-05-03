@@ -209,7 +209,9 @@ function CheckoutPage() {
   };
 
 
-  const subtotal = item.baseEach * (variant === "couples" ? Number(bundle) * 2 : Number(bundle));
+  const subtotal = variant === "couples"
+    ? item.price
+    : item.baseEach * Number(bundle);
   // Bundle savings = subtotal - price
   const bundleSavings = Math.max(0, subtotal - item.price);
   const discountAmount = discountApplied?.amount ?? 0;
