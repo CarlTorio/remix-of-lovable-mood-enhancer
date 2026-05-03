@@ -88,6 +88,7 @@ export const Route = createFileRoute("/api/pancake")({
       POST: async ({ request }) => {
         const apiKey = process.env.PANCAKE_API_KEY;
         const shopId = process.env.PANCAKE_SHOP_ID;
+        console.log("[pancake] secrets check — apiKey present:", !!apiKey, "len:", apiKey?.length, "shopId:", shopId);
         if (!apiKey || !shopId) return json({ error: "Missing PANCAKE_API_KEY or PANCAKE_SHOP_ID" }, 500);
 
         let parsed: z.infer<typeof Body>;
