@@ -1398,10 +1398,10 @@ function HowToOrder() {
             position: static;
           }
           .howuse-bottles {
-            width: 180px;
+            width: 220px;
           }
           .howuse-bottle {
-            width: 85px;
+            width: 105px;
           }
           .howuse-step-num {
             font-size: 30px;
