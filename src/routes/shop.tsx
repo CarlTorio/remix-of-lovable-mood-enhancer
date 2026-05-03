@@ -491,13 +491,90 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
           <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
             {title}
           </h2>
-          <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
-            <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
-            <span>{rating} · {reviews} reviews</span>
-          </div>
-          <p className="mt-4 mb-7 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
+          <p className="mt-4 mb-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
             {description}
           </p>
+
+          <style>{`
+            .trust-signal-block {
+              margin: 16px 0 32px;
+              padding: 18px 20px;
+              background: linear-gradient(180deg, #1A0E0E 0%, #160808 100%);
+              border: 0.5px solid rgba(184, 149, 90, 0.3);
+              border-radius: 12px;
+              box-shadow: 0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
+            .trust-rating-row {
+              display: flex; align-items: center; gap: 12px;
+              margin-bottom: 14px; padding-bottom: 14px;
+              border-bottom: 0.5px solid rgba(184, 149, 90, 0.18);
+              flex-wrap: wrap;
+            }
+            .trust-stars {
+              color: #C9A06D; font-size: 18px; letter-spacing: 2px;
+              text-shadow: 0 0 8px rgba(201, 160, 109, 0.3);
+            }
+            .trust-rating-text { display: flex; align-items: baseline; gap: 2px; }
+            .trust-rating-number {
+              font-family: 'Playfair Display', Georgia, serif; font-style: italic;
+              font-size: 24px; color: #F2EAE0; font-weight: 500; line-height: 1;
+            }
+            .trust-rating-divider { color: rgba(154, 136, 128, 0.5); font-size: 16px; }
+            .trust-rating-out {
+              color: rgba(154, 136, 128, 0.7); font-size: 13px;
+              font-family: 'Montserrat', sans-serif;
+            }
+            .trust-reviews-link {
+              font-family: 'Montserrat', sans-serif; font-size: 12px;
+              color: rgba(242, 234, 224, 0.85); letter-spacing: 0.3px;
+            }
+            .trust-reviews-link strong { color: #F2EAE0; font-weight: 600; }
+            .trust-badges-row { display: flex; gap: 8px; flex-wrap: wrap; }
+            .trust-badge {
+              display: inline-flex; align-items: center; gap: 6px;
+              padding: 6px 12px;
+              background: rgba(184, 149, 90, 0.06);
+              border: 0.5px solid rgba(184, 149, 90, 0.25);
+              border-radius: 999px;
+              font-family: 'Montserrat', sans-serif;
+              font-size: 10px; letter-spacing: 0.5px;
+              color: rgba(242, 234, 224, 0.9);
+              white-space: nowrap; transition: all 200ms ease;
+            }
+            .trust-badge:hover {
+              background: rgba(184, 149, 90, 0.1);
+              border-color: rgba(184, 149, 90, 0.4);
+            }
+            .badge-icon { font-size: 11px; color: #C9A06D; }
+            @media (max-width: 768px) {
+              .trust-signal-block { padding: 14px 16px; margin: 12px 0 24px; }
+              .trust-rating-row { gap: 8px; margin-bottom: 12px; padding-bottom: 12px; }
+              .trust-stars { font-size: 14px; letter-spacing: 1.5px; }
+              .trust-rating-number { font-size: 20px; }
+              .trust-reviews-link { font-size: 11px; width: 100%; }
+              .trust-badges-row { gap: 6px; }
+              .trust-badge { padding: 5px 10px; font-size: 9px; letter-spacing: 0.3px; }
+              .badge-icon { font-size: 10px; }
+            }
+          `}</style>
+          <div className="trust-signal-block">
+            <div className="trust-rating-row">
+              <span className="trust-stars">★★★★★</span>
+              <span className="trust-rating-text">
+                <span className="trust-rating-number">{rating}</span>
+                <span className="trust-rating-divider">/</span>
+                <span className="trust-rating-out">5</span>
+              </span>
+              <span className="trust-reviews-link">
+                Based on <strong>{reviews}</strong> verified reviews
+              </span>
+            </div>
+            <div className="trust-badges-row">
+              <span className="trust-badge"><span className="badge-icon">⚕</span> FDA-Registered Facility</span>
+              <span className="trust-badge"><span className="badge-icon">🌿</span> 100% Natural Ingredients</span>
+              <span className="trust-badge"><span className="badge-icon">🛡</span> 30-Day Money-Back</span>
+            </div>
+          </div>
 
           {/* SECTION 1 */}
           <SectionHeader num={1} label="PICK YOUR VARIANT" />
