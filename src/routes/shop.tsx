@@ -755,78 +755,84 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
         </p>
 
         {/* Bundles */}
-        <div className="mt-6 space-y-3">
+        <div className="mt-6 space-y-5">
           {couplesBundles.map((b) => {
             const isSelected = selected === b.id;
-            const borderClass =
-              b.badge === "BEST SELLER"
-                ? "border-[var(--color-brand-red)]"
-                : b.badge === "BEST VALUE"
-                ? "border-[var(--color-gold)]"
-                : isSelected
-                ? "border-[var(--color-ivory)]/60"
-                : "border-white/10";
+            const borderColor = isSelected
+              ? "var(--color-brand-red)"
+              : "rgba(184, 149, 90, 0.45)";
             return (
-              <button
-                key={b.id}
-                onClick={() => setSelected(b.id)}
-                className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
-                  isSelected ? "bg-white/[0.04]" : "bg-transparent"
-                } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
-              >
-                <span
-                  className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
-                    isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
-                  }`}
+              <div key={b.id} className="relative">
+                {b.savePercent && (
+                  <div
+                    className="absolute z-10"
+                    style={{
+                      top: -14,
+                      right: 16,
+                      background: "#0D0606",
+                      color: "#F2EAE0",
+                      borderRadius: 999,
+                      padding: "5px 12px",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      fontFamily: "Montserrat, sans-serif",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      border: "0.5px solid rgba(184, 149, 90, 0.4)",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    <span style={{ color: "#C9A06D" }}>★</span> Save {b.savePercent}%
+                  </div>
+                )}
+                <button
+                  onClick={() => setSelected(b.id)}
+                  className="w-full text-left transition-all"
+                  style={{
+                    borderRadius: 14,
+                    border: `2px solid ${borderColor}`,
+                    background: isSelected ? "rgba(220, 38, 39, 0.04)" : "transparent",
+                    padding: "18px 20px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                  }}
                 >
-                  {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
-                </span>
-                <div className="relative flex-shrink-0 h-[60px] w-[88px] flex items-center justify-center">
-                  {Array.from({ length: Number(b.id) || 1 }).slice(0, 3).flatMap((_, setIdx, arr) => {
-                    const sets = arr.length;
-                    const setOffset = (setIdx - (sets - 1) / 2) * 22;
-                    return [BOTTLE_HER_URL, BOTTLE_HIM_URL].map((src, j) => (
-                      <img
-                        key={`${setIdx}-${j}`}
-                        src={src}
-                        alt=""
-                        loading="lazy"
-                        aria-hidden
-                        className="absolute h-[60px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
-                        style={{
-                          transform: `translateX(${setOffset + (j === 0 ? -7 : 7)}px)`,
-                          zIndex: 10 - setIdx * 2 + (j === 0 ? 1 : 0),
-                        }}
-                      />
-                    ));
-                  })}
-                </div>
-                 <div className="flex-1 min-w-0">
-                   <div className="flex items-center gap-2 flex-wrap">
-                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
-                     {b.badge && (
-                       <span
-                         className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
-                           b.badge === "BEST SELLER"
-                             ? "bg-[var(--color-brand-red)] text-white"
-                             : "bg-[var(--color-gold)] text-[var(--color-noir)]"
-                         }`}
-                       >
-                         {b.badge}
-                       </span>
-                     )}
-                   </div>
-                   <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
-                     ₱{b.price.toLocaleString()}
-                     {b.save ? ` · Save ₱${b.save}` : ""}
-                   </div>
-                   <BundleBonusIndicator tier={(b.id === "3" ? "3" : "2") as "2" | "3"} />
-                 </div>
-                 <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
-               </button>
-             );
-           })}
-         </div>
+                  <span
+                    className="flex-shrink-0 inline-flex items-center justify-center rounded-full"
+                    style={{
+                      height: 22,
+                      width: 22,
+                      border: `2px solid ${isSelected ? "var(--color-brand-red)" : "rgba(184,149,90,0.5)"}`,
+                    }}
+                  >
+                    {isSelected && <span style={{ height: 10, width: 10, borderRadius: 999, background: "var(--color-brand-red)" }} />}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[var(--color-ivory)] font-semibold leading-tight text-[14px] sm:text-[16px]">
+                      {b.label}
+                    </div>
+                    <div className="mt-1.5 flex items-center gap-2 flex-wrap text-[12px] sm:text-[13px]">
+                      <span style={{ color: "rgba(242,234,224,0.5)", textDecoration: "line-through", fontStyle: "italic" }}>
+                        ₱{b.originalPrice.toLocaleString()}
+                      </span>
+                      <span style={{ color: "rgba(242,234,224,0.7)" }}>{b.supply}</span>
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0 text-right">
+                    <div style={{ color: "var(--color-brand-red)", fontWeight: 700, lineHeight: 1 }} className="text-[18px] sm:text-[22px]">
+                      ₱{b.price.toLocaleString()}
+                    </div>
+                    <div style={{ color: "rgba(242,234,224,0.5)", textDecoration: "line-through", fontStyle: "italic", marginTop: 4 }} className="text-[11px] sm:text-[12px]">
+                      ₱{b.perDay}/day
+                    </div>
+                  </div>
+                </button>
+              </div>
+            );
+          })}
+        </div>
 
          {/* What's included (couples always include the bonus) */}
          <BundleIncludesSection
