@@ -430,35 +430,20 @@ function CheckoutPage() {
               </FieldRow>
 
               <FieldRow>
-                <Field label="Region" required>
-                  <AddressCombobox
-                    label="Region"
-                    placeholder="Select region"
-                    value={form.regionCode}
-                    onChange={(c, l) => { setRegion(c, l); setAddressErrors((e) => ({ ...e, region: undefined })); }}
-                    options={regionOptions}
-                    loading={loadingRegions}
-                    required
-                  />
-                  {addressErrors.region && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.region}</div>}
-                </Field>
-              </FieldRow>
-
-              <FieldRow>
                 <Field label="Province" required>
                   <AddressCombobox
                     label="Province"
-                    placeholder={form.regionCode ? "Select province" : "Select region first"}
+                    placeholder="Select province"
                     value={form.provinceCode}
                     onChange={(c, l) => { setProvince(c, l); setAddressErrors((e) => ({ ...e, province: undefined })); }}
                     options={provinceOptions}
-                    disabled={!form.regionCode}
                     loading={loadingProvinces}
                     required
                   />
                   {addressErrors.province && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.province}</div>}
                 </Field>
               </FieldRow>
+
 
               <FieldRow>
                 <Field label="City / Municipality" required>
