@@ -105,8 +105,25 @@ export const Route = createFileRoute("/api/pancake")({
               return json({ data });
             }
             case "getProvinces": {
-              const data = await pancakeGet(`/countries/63/provinces`, apiKey);
-              return json({ data });
+              // Probe several known Pancake geo paths until one returns 200
+              const candidates = [
+                `/shops/${shopId}/countries/63/provinces`,
+                `/countries/63/provinces`,
+                `/provinces?country_code=63`,
+                `/shops/${shopId}/provinces`,
+                `/shops/${shopId}/provinces?country_code=63`,
+                `/locations/provinces?country_code=63`,
+                `/shops/${shopId}/shipping_addresses/provinces`,
+              ];
+              for (const path of candidates) {
+                try {
+                  const data = await pancakeGet(path, apiKey);
+                  return json({ data, _path: path });
+                } catch (e) {
+                  console.log("[pancake] province path failed:", path, (e as Error).message.slice(0, 120));
+                }
+              }
+              return json({ error: "No working Pancake province endpoint" }, 502);
             }
             case "getDistricts": {
               const data = await pancakeGet(`/provinces/${parsed.provinceId}/districts`, apiKey);
