@@ -3,15 +3,15 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Lock, Truck, CheckCircle2, ArrowLeft, Star, Heart } from "lucide-react";
 import { AddressCombobox, type ComboOption } from "@/components/AddressCombobox";
 import {
-  loadRegions,
-  provincesByRegion,
-  citiesByProvince,
-  barangaysByCity,
-  type Region,
-  type Province,
-  type City,
-  type Barangay,
-} from "@/lib/psgc";
+  fetchVariations,
+  fetchProvinces,
+  fetchDistricts,
+  fetchCommunes,
+  submitOrder,
+  PRODUCT_MAP,
+  type PancakeGeo,
+  type PancakeSku,
+} from "@/services/pancakeService";
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
@@ -110,42 +110,32 @@ function CheckoutPage() {
     sessionStorage.setItem("lovable-checkout-form", JSON.stringify(form));
   }, [form]);
 
-  // ====== PSGC cascading data ======
-  const [regions, setRegions] = useState<Region[]>([]);
-  const [provinces, setProvinces] = useState<Province[]>([]);
-  const [cities, setCities] = useState<City[]>([]);
-  const [barangays, setBarangays] = useState<Barangay[]>([]);
-  const [loadingRegions, setLoadingRegions] = useState(false);
+  // ====== Pancake cascading geo data (Province -> District -> Commune) ======
+  const [provinces, setProvinces] = useState<PancakeGeo[]>([]);
+  const [cities, setCities] = useState<PancakeGeo[]>([]);
+  const [barangays, setBarangays] = useState<PancakeGeo[]>([]);
   const [loadingProvinces, setLoadingProvinces] = useState(false);
   const [loadingCities, setLoadingCities] = useState(false);
   const [loadingBarangays, setLoadingBarangays] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Load provinces + warm variation cache on mount
   useEffect(() => {
-    let cancelled = false;
-    setLoadingRegions(true);
-    loadRegions()
-      .then((r) => { if (!cancelled) setRegions(r); })
-      .catch(() => {})
-      .finally(() => { if (!cancelled) setLoadingRegions(false); });
-    return () => { cancelled = true; };
-  }, []);
-
-  useEffect(() => {
-    if (!form.regionCode) { setProvinces([]); return; }
     let cancelled = false;
     setLoadingProvinces(true);
-    provincesByRegion(form.regionCode)
+    fetchProvinces()
       .then((p) => { if (!cancelled) setProvinces(p); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoadingProvinces(false); });
+    fetchVariations().catch(() => {});
     return () => { cancelled = true; };
-  }, [form.regionCode]);
+  }, []);
 
   useEffect(() => {
     if (!form.provinceCode) { setCities([]); return; }
     let cancelled = false;
     setLoadingCities(true);
-    citiesByProvince(form.provinceCode)
+    fetchDistricts(form.provinceCode)
       .then((c) => { if (!cancelled) setCities(c); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoadingCities(false); });
@@ -156,39 +146,26 @@ function CheckoutPage() {
     if (!form.cityCode) { setBarangays([]); return; }
     let cancelled = false;
     setLoadingBarangays(true);
-    barangaysByCity(form.cityCode)
+    fetchCommunes(form.cityCode)
       .then((b) => { if (!cancelled) setBarangays(b); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoadingBarangays(false); });
     return () => { cancelled = true; };
   }, [form.cityCode]);
 
-  const regionOptions: ComboOption[] = useMemo(
-    () => regions.map((r) => ({ value: r.region_code, label: r.region_name })),
-    [regions],
-  );
   const provinceOptions: ComboOption[] = useMemo(
-    () => provinces.map((p) => ({ value: p.province_code, label: p.province_name })),
+    () => provinces.map((p) => ({ value: String(p.id), label: p.name })),
     [provinces],
   );
   const cityOptions: ComboOption[] = useMemo(
-    () => cities.map((c) => ({ value: c.city_code, label: c.city_name })),
+    () => cities.map((c) => ({ value: String(c.id), label: c.name })),
     [cities],
   );
   const barangayOptions: ComboOption[] = useMemo(
-    () => barangays.map((b) => ({ value: b.brgy_code, label: b.brgy_name })),
+    () => barangays.map((b) => ({ value: String(b.id), label: b.name })),
     [barangays],
   );
 
-  const setRegion = (code: string, label: string) => {
-    setForm((f) => ({
-      ...f,
-      regionCode: code, region: label,
-      provinceCode: "", province: "",
-      cityCode: "", city: "",
-      barangayCode: "", barangay: "",
-    }));
-  };
   const setProvince = (code: string, label: string) => {
     setForm((f) => ({
       ...f,
@@ -207,6 +184,7 @@ function CheckoutPage() {
   const setBarangay = (code: string, label: string) => {
     setForm((f) => ({ ...f, barangayCode: code, barangay: label }));
   };
+
 
 
   const subtotal = variant === "couples"
@@ -241,6 +219,7 @@ function CheckoutPage() {
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+    setSubmitError(null);
 
     const fullName = form.fullName.trim();
     if (!fullName.includes(" ")) {
@@ -248,8 +227,13 @@ function CheckoutPage() {
       return;
     }
 
+    const phoneDigits = form.phone.replace(/\D/g, "");
+    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      setSubmitError("Please enter a valid phone number (10-11 digits).");
+      return;
+    }
+
     const errs: typeof addressErrors = {};
-    if (!form.regionCode) errs.region = "Please select your region";
     if (!form.provinceCode) errs.province = "Please select your province";
     if (!form.cityCode) errs.city = "Please select your city or municipality";
     if (!form.barangayCode) errs.barangay = "Please select your barangay";
@@ -257,45 +241,49 @@ function CheckoutPage() {
     setAddressErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    setSubmitting(true);
-    const [firstName, ...rest] = fullName.split(/\s+/);
-    const lastName = rest.join(" ");
-    const landmark = form.landmark.trim();
-    const fullAddress = [
-      form.address.trim(),
-      `Brgy. ${form.barangay}`,
-      form.city,
-      form.province,
-      form.region,
-    ].filter(Boolean).join(", ") + (landmark ? `. Landmark: ${landmark}.` : "");
-    const order = {
-      country: "Philippines",
-      fullName,
-      firstName,
-      lastName,
-      phone: form.phone,
-      email: form.email,
-      address: form.address,
-      region: { code: form.regionCode, name: form.region },
-      province: { code: form.provinceCode, name: form.province },
-      city: { code: form.cityCode, name: form.city },
-      barangay: { code: form.barangayCode, name: form.barangay },
-      landmark,
-      fullAddress,
-      paymentMethod: "COD",
-      variant,
-      bundle,
-      total,
+    // Resolve Pancake SKU from variant + bundle
+    const skuMap: Record<Variant, Record<BundleId, PancakeSku>> = {
+      her: { "1": "1LFW", "2": "2LFW", "3": "3LFW" },
+      him: { "1": "1LFM", "2": "2LFM", "3": "3LFM" },
+      couples: { "1": "1LFC", "2": "2LFC", "3": "2LFC" },
     };
-    // Simulated submit (POS receives order on backend in production)
-    void order;
-    await new Promise((r) => setTimeout(r, 1200));
-    setSubmitting(false);
+    const sku = skuMap[variant][bundle];
+    const product = PRODUCT_MAP[sku];
 
-    // Generate a simple order reference like LV-2026-001234
+    const [firstName] = fullName.split(/\s+/);
+    const landmark = form.landmark.trim();
+
+    // Generate website order reference
     const year = new Date().getFullYear();
     const seq = Math.floor(100000 + Math.random() * 900000);
     const orderId = `LV-${year}-${seq}`;
+
+    setSubmitting(true);
+    try {
+      await submitOrder({
+        fullName,
+        phone: phoneDigits,
+        streetAddress: form.address.trim(),
+        landmark,
+        provinceId: form.provinceCode,
+        provinceName: form.province,
+        districtId: form.cityCode,
+        districtName: form.city,
+        communeId: form.barangayCode,
+        communeName: form.barangay,
+        paymentMethod: "cod",
+        price: product.price,
+        productId: product.productId,
+        sku,
+        bundleLabel: item.label,
+        websiteOrderId: orderId,
+      });
+    } catch (err) {
+      setSubmitting(false);
+      setSubmitError((err as Error).message || "Could not place order. Please try again.");
+      return;
+    }
+    setSubmitting(false);
 
     navigate({
       to: "/thank-you",
@@ -308,12 +296,13 @@ function CheckoutPage() {
         fullName,
         phone: form.phone,
         address: form.address,
-        region: form.region,
+        region: "",
         city: form.city,
         barangay: form.barangay,
       } as never,
     });
   };
+
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
@@ -441,35 +430,20 @@ function CheckoutPage() {
               </FieldRow>
 
               <FieldRow>
-                <Field label="Region" required>
-                  <AddressCombobox
-                    label="Region"
-                    placeholder="Select region"
-                    value={form.regionCode}
-                    onChange={(c, l) => { setRegion(c, l); setAddressErrors((e) => ({ ...e, region: undefined })); }}
-                    options={regionOptions}
-                    loading={loadingRegions}
-                    required
-                  />
-                  {addressErrors.region && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.region}</div>}
-                </Field>
-              </FieldRow>
-
-              <FieldRow>
                 <Field label="Province" required>
                   <AddressCombobox
                     label="Province"
-                    placeholder={form.regionCode ? "Select province" : "Select region first"}
+                    placeholder="Select province"
                     value={form.provinceCode}
                     onChange={(c, l) => { setProvince(c, l); setAddressErrors((e) => ({ ...e, province: undefined })); }}
                     options={provinceOptions}
-                    disabled={!form.regionCode}
                     loading={loadingProvinces}
                     required
                   />
                   {addressErrors.province && <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{addressErrors.province}</div>}
                 </Field>
               </FieldRow>
+
 
               <FieldRow>
                 <Field label="City / Municipality" required>
@@ -540,11 +514,16 @@ function CheckoutPage() {
               </div>
             </SectionCard>
 
+            {submitError && (
+              <div role="alert" style={{ marginTop: 16, padding: "12px 14px", border: "1px solid rgba(220,38,39,0.5)", background: "rgba(220,38,39,0.08)", color: "#F2EAE0", borderRadius: 8, fontSize: 12 }}>
+                {submitError}
+              </div>
+            )}
             <button
               type="submit"
               disabled={submitting}
               className="btn-pulse-shine btn-pulse-medium ck-place-order"
-              style={{ width: "100%", marginTop: 32, opacity: submitting ? 0.7 : 1 }}
+              style={{ width: "100%", marginTop: 24, opacity: submitting ? 0.7 : 1 }}
             >
               <span>
                 {submitting ? "PROCESSING..." : `PLACE ORDER · ₱${total.toLocaleString()}`}
