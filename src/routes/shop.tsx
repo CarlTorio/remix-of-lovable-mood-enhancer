@@ -109,6 +109,7 @@ function ShopPage() {
         <TrustAssurance />
         <HowToOrder />
         <MobileTestimonials />
+        <IngredientsShowcase />
         <ComprehensiveFAQ />
         <FinalShopCTA />
       </main>
