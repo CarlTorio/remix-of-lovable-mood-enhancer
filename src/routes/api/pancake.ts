@@ -60,7 +60,8 @@ const json = (data: unknown, status = 200) =>
 
 async function pancakeGet(path: string, apiKey: string) {
   const sep = path.includes("?") ? "&" : "?";
-  const res = await fetch(`${PANCAKE_BASE}${path}${sep}api_key=${encodeURIComponent(apiKey)}`);
+  const url = `${PANCAKE_BASE}${path}${sep}api_key=${encodeURIComponent(apiKey)}`;
+  const res = await fetch(url);
   const text = await res.text();
   if (!res.ok) throw new Error(`Pancake ${res.status}: ${text.slice(0, 300)}`);
   try { return JSON.parse(text); } catch { return text; }
@@ -101,15 +102,16 @@ export const Route = createFileRoute("/api/pancake")({
               return json({ data });
             }
             case "getProvinces": {
-              const data = await pancakeGet(`/countries/63/provinces`, apiKey);
+              // Pancake uses ISO calling code 63 for Philippines (not "PH")
+              const data = await pancakeGet(`/geo/provinces?country_code=63`, apiKey);
               return json({ data });
             }
             case "getDistricts": {
-              const data = await pancakeGet(`/provinces/${parsed.provinceId}/districts`, apiKey);
+              const data = await pancakeGet(`/geo/districts?province_id=${encodeURIComponent(String(parsed.provinceId))}`, apiKey);
               return json({ data });
             }
             case "getCommunes": {
-              const data = await pancakeGet(`/districts/${parsed.districtId}/communes`, apiKey);
+              const data = await pancakeGet(`/geo/communes?district_id=${encodeURIComponent(String(parsed.districtId))}`, apiKey);
               return json({ data });
             }
             case "createOrder": {
