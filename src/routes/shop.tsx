@@ -87,10 +87,32 @@ const himBundles: Bundle[] = [
   { id: "3", label: "3 Bottles", price: 1199, save: 598, badge: "BEST VALUE" },
 ];
 
-const couplesBundles: Bundle[] = [
-  { id: "1", label: "1 Set", price: 1099, save: 99 },
-  { id: "2", label: "2 Sets", price: 1899, save: 299, badge: "BEST SELLER" },
-  { id: "3", label: "3 Sets", price: 2699, save: 598, badge: "BEST VALUE" },
+type CouplesBundle = Bundle & {
+  originalPrice: number;
+  supply: string;
+  perDay: number;
+  savePercent?: number;
+};
+
+const couplesBundles: CouplesBundle[] = [
+  {
+    id: "1",
+    label: "1 Bottle Men + 1 Bottle Women",
+    price: 1598,
+    originalPrice: 3596,
+    supply: "30-day supply",
+    perDay: 53,
+  },
+  {
+    id: "2",
+    label: "2 Bottles Men + 2 Bottles Women",
+    price: 2796,
+    originalPrice: 7196,
+    supply: "60-day supply",
+    perDay: 47,
+    savePercent: 22,
+    badge: "BEST SELLER",
+  },
 ];
 
 function ShopPage() {
