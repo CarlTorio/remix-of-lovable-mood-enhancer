@@ -91,9 +91,8 @@ const himBundles: Bundle[] = [
 ];
 
 const couplesBundles: Bundle[] = [
-  { id: "1", label: "1 Bottle Men + 1 Bottle Women", price: 1099, originalPrice: 1198, supply: "30-day supply", perDay: 37, savePercent: 8 },
-  { id: "2", label: "2 Bottles Men + 2 Bottles Women", price: 1899, originalPrice: 2396, supply: "60-day supply", perDay: 32, savePercent: 21, badge: "BEST SELLER" },
-  { id: "3", label: "3 Bottles Men + 3 Bottles Women", price: 2699, originalPrice: 3594, supply: "90-day supply", perDay: 30, savePercent: 25, badge: "BEST VALUE" },
+  { id: "1", label: "1 Bottle Men + 1 Bottle Women", price: 899, originalPrice: 3596, supply: "30-day supply", perDay: 30 },
+  { id: "2", label: "2 Bottles Men + 2 Bottles Women", price: 1476, originalPrice: 7196, supply: "60-day supply", perDay: 25, savePercent: 22, badge: "BEST SELLER" },
 ];
 
 function ShopPage() {
@@ -593,6 +592,7 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
                           fontSize: 10,
                           color: "rgba(184,149,90,0.85)",
                           fontStyle: "italic",
+                          textDecoration: b.originalPrice > b.price ? "line-through" : "none",
                         }}
                       >
                         ₱{b.perDay}/day
@@ -603,6 +603,21 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
               );
             })}
           </div>
+
+          <p
+            style={{
+              margin: "4px 0 16px",
+              fontFamily: "Montserrat, sans-serif",
+              fontStyle: "italic",
+              fontSize: 9,
+              color: "rgba(154,136,128,0.5)",
+              textAlign: "center",
+              letterSpacing: 0.3,
+              lineHeight: 1.4,
+            }}
+          >
+            Strikethrough prices indicate suggested retail price. Actual savings may vary based on individual product purchase price.
+          </p>
 
           {/* What's included (bonus + product) for tiers 2/3 */}
           {selectedBundle.id !== "1" && (
