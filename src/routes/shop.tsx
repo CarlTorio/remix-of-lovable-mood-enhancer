@@ -714,9 +714,10 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
 
           {/* CHECK OUT */}
           <Link
+            ref={checkoutRef}
             to="/checkout"
             search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-            className="lvb-checkout-btn btn-shine mt-6"
+            className="lvb-checkout-btn btn-shine magnetic-button mt-6"
           >
             <span>CHECK OUT</span>
             <span aria-hidden>🛒</span>
