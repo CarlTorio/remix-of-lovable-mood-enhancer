@@ -24,6 +24,7 @@ type Ingredient = {
   name: React.ReactNode;
   description: string;
   benefits: string[];
+  source: string;
 };
 
 const HER: Ingredient[] = [
@@ -40,6 +41,7 @@ const HER: Ingredient[] = [
       "Supports physical responsiveness",
       "Clinically studied dosage",
     ],
+    source: "Sourced from non-GMO fermentation",
   },
   {
     key: "magnesium",
@@ -54,6 +56,7 @@ const HER: Ingredient[] = [
       "Supports better sleep quality",
       "Reduces stress-related tension",
     ],
+    source: "Chelated for maximum absorption",
   },
   {
     key: "taurine",
@@ -68,6 +71,7 @@ const HER: Ingredient[] = [
       "Supports mood balance",
       "Enhances natural responsiveness",
     ],
+    source: "Pharmaceutical grade purity",
   },
   {
     key: "b6",
@@ -82,6 +86,7 @@ const HER: Ingredient[] = [
       "Promotes hormone balance",
       "Enhances mood naturally",
     ],
+    source: "Active P-5-P form",
   },
 ];
 
@@ -99,6 +104,7 @@ const HIM: Ingredient[] = [
       "Enhances physical stamina",
       "Promotes confidence",
     ],
+    source: "Wild-harvested from Indonesia",
   },
   {
     key: "maca",
@@ -113,6 +119,7 @@ const HIM: Ingredient[] = [
       "Supports natural drive",
       "Enhances endurance",
     ],
+    source: "Grown in the Peruvian Andes",
   },
   {
     key: "ginseng",
@@ -127,6 +134,7 @@ const HIM: Ingredient[] = [
       "Supports physical performance",
       "Enhances natural confidence",
     ],
+    source: "6-year aged Korean root",
   },
 ];
 
@@ -164,25 +172,40 @@ export function IngredientsShowcase() {
         .ingredients-section {
           padding: 80px 24px;
           background: linear-gradient(180deg, #0F0808 0%, #160808 50%, #0F0808 100%);
+          position: relative;
+          overflow: hidden;
+        }
+        .ingredients-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(ellipse at 30% 50%, rgba(184,149,90,0.04) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 50%, rgba(220,38,39,0.03) 0%, transparent 50%);
+          pointer-events: none;
+        }
+        .ingredients-container {
+          max-width: 1080px; margin: 0 auto;
+          position: relative; z-index: 1;
         }
         .ingredients-eyebrow {
           font-family: 'Montserrat', sans-serif;
           font-size: 10px; letter-spacing: 3px;
           color: #C9A06D; text-transform: uppercase;
-          text-align: center; margin: 0 0 12px;
+          text-align: center; margin: 0 0 12px; font-weight: 500;
         }
         .ingredients-title {
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 42px; color: #F2EAE0;
           text-align: center; font-weight: 400;
-          margin: 0 0 12px; line-height: 1.1;
+          margin: 0 0 12px; line-height: 1.1; letter-spacing: -0.01em;
         }
         .ingredients-title em { font-style: italic; color: #B8955A; }
         .ingredients-sub {
           font-family: 'Playfair Display', Georgia, serif;
           font-style: italic; font-size: 16px;
-          color: rgba(184, 149, 90, 0.85);
-          text-align: center; margin: 0 auto 32px; max-width: 540px;
+          color: rgba(184,149,90,0.85);
+          text-align: center; margin: 0 auto 32px; max-width: 540px; line-height: 1.5;
         }
         .ingredients-side-toggle {
           display: flex; justify-content: center; gap: 6px;
@@ -204,142 +227,182 @@ export function IngredientsShowcase() {
         }
         .ingredients-tabs {
           display: flex; justify-content: center; gap: 8px;
-          margin: 0 auto 48px; flex-wrap: wrap; max-width: 720px;
+          margin-bottom: 48px; flex-wrap: wrap;
         }
         .ingredient-tab {
           padding: 10px 20px;
-          background: rgba(13, 6, 6, 0.5);
-          border: 0.5px solid rgba(184, 149, 90, 0.3);
+          background: rgba(13,6,6,0.5);
+          border: 0.5px solid rgba(184,149,90,0.3);
           border-radius: 999px;
-          color: rgba(242, 234, 224, 0.7);
+          color: rgba(242,234,224,0.7);
           font-family: 'Montserrat', sans-serif;
           font-size: 11px; letter-spacing: 1px; font-weight: 500;
-          cursor: pointer; transition: all 250ms ease;
+          cursor: pointer; transition: all 250ms ease; white-space: nowrap;
         }
         .ingredient-tab:hover {
-          border-color: rgba(184, 149, 90, 0.5); color: #F2EAE0;
+          border-color: rgba(184,149,90,0.5);
+          color: #F2EAE0; background: rgba(184,149,90,0.06);
         }
         .ingredient-tab.active {
           background: linear-gradient(135deg, #DC2627, #C61F20);
           border: 0.5px solid #DC2627; color: #F2EAE0;
           box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.2) inset,
-            0 4px 12px rgba(220, 38, 39, 0.4);
+            0 1px 0 rgba(242,234,224,0.2) inset,
+            0 4px 12px rgba(220,38,39,0.4);
         }
         .ingredients-content {
           display: grid; grid-template-columns: 1fr 1fr;
-          gap: 48px; align-items: center;
-          max-width: 1080px; margin: 0 auto;
+          gap: 48px; align-items: center; min-height: 480px;
           transition: opacity 200ms ease;
         }
-        .ingredient-image {
-          aspect-ratio: 1 / 1; background: #1A0E0E;
-          border: 0.5px solid rgba(184, 149, 90, 0.25);
-          border-radius: 16px; padding: 60px;
+        .ingredient-image-wrapper {
+          aspect-ratio: 1 / 1;
+          background: linear-gradient(135deg, #1A0E0E 0%, #160808 50%, #1A0E0E 100%);
+          border: 0.5px solid rgba(184,149,90,0.25);
+          border-radius: 16px; padding: 48px;
           display: flex; align-items: center; justify-content: center;
+          position: relative; overflow: hidden;
           box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.05) inset,
-            0 16px 48px rgba(0, 0, 0, 0.4),
-            0 0 64px rgba(184, 149, 90, 0.05);
+            0 1px 0 rgba(242,234,224,0.05) inset,
+            0 16px 48px rgba(0,0,0,0.4),
+            0 0 64px rgba(184,149,90,0.05);
         }
-        .ingredient-image img {
+        .ingredient-image-wrapper::before {
+          content: ''; position: absolute; inset: 0;
+          background: radial-gradient(circle at center, rgba(184,149,90,0.08) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .ingredient-image-wrapper::after {
+          content: ''; position: absolute;
+          top: 16px; left: 16px; right: 16px; bottom: 16px;
+          border: 0.5px solid rgba(184,149,90,0.12);
+          border-radius: 12px; pointer-events: none;
+        }
+        .ingredient-image-wrapper img {
           width: 100%; height: 100%; object-fit: contain;
+          position: relative; z-index: 1;
+          filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
         }
         .ingredient-text { display: flex; flex-direction: column; gap: 16px; }
         .ingredient-meta {
           display: flex; align-items: center; gap: 12px;
           color: #C9A06D; font-family: 'Montserrat', sans-serif;
-          font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+          font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+          font-weight: 600;
         }
         .ingredient-meta::before {
-          content: ''; width: 24px; height: 0.5px; background: #B8955A;
+          content: ''; width: 24px; height: 0.5px;
+          background: linear-gradient(to right, transparent, #B8955A);
         }
         .ingredient-name {
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 36px; color: #F2EAE0; font-weight: 400;
-          margin: 0; line-height: 1.1;
+          margin: 0; line-height: 1.1; letter-spacing: -0.01em;
         }
         .ingredient-name em { font-style: italic; color: #DC2627; }
         .ingredient-description {
-          font-size: 14px; color: rgba(242, 234, 224, 0.85);
+          font-size: 14px; color: rgba(242,234,224,0.85);
           line-height: 1.6; margin: 0;
         }
-        .ingredient-benefits {
-          display: flex; flex-direction: column; gap: 10px; margin-top: 8px;
+        .ingredient-divider {
+          width: 32px; height: 0.5px;
+          background: linear-gradient(to right, #B8955A, transparent);
+          margin: 8px 0;
         }
+        .ingredient-benefits { display: flex; flex-direction: column; gap: 10px; }
         .ingredient-benefit {
           display: flex; align-items: flex-start; gap: 10px;
-          font-size: 13px; color: rgba(242, 234, 224, 0.85); line-height: 1.5;
+          font-size: 13px; color: rgba(242,234,224,0.85); line-height: 1.5;
         }
         .ingredient-benefit::before {
           content: '◆'; color: #C9A06D; font-size: 8px;
           margin-top: 6px; flex-shrink: 0;
         }
+        .ingredient-source {
+          margin-top: 16px; padding-top: 16px;
+          border-top: 0.5px solid rgba(184,149,90,0.18);
+          display: flex; align-items: center; gap: 8px;
+          font-size: 10px; color: rgba(154,136,128,0.85);
+          font-style: italic; letter-spacing: 0.5px;
+          font-family: 'Montserrat', sans-serif;
+          text-transform: uppercase;
+        }
+        .ingredient-source::before {
+          content: '✓'; color: #1FBB7B; font-size: 11px;
+          font-style: normal; font-weight: 700;
+        }
         @media (max-width: 768px) {
           .ingredients-section { padding: 56px 16px; }
           .ingredients-title { font-size: 30px; }
           .ingredients-sub { font-size: 13px; margin-bottom: 24px; }
+          .ingredients-tabs { margin-bottom: 32px; }
           .ingredient-tab { padding: 8px 14px; font-size: 10px; letter-spacing: 0.5px; }
-          .ingredients-content { grid-template-columns: 1fr; gap: 24px; }
-          .ingredient-image { padding: 32px; max-width: 280px; margin: 0 auto; }
+          .ingredients-content {
+            grid-template-columns: 1fr; gap: 28px; min-height: 0;
+          }
+          .ingredient-image-wrapper { padding: 32px; max-width: 320px; margin: 0 auto; width: 100%; }
           .ingredient-name { font-size: 26px; }
           .ingredient-description { font-size: 13px; }
           .ingredient-benefit { font-size: 12px; }
         }
       `}</style>
 
-      <p className="ingredients-eyebrow">Crafted With Intention</p>
-      <h2 className="ingredients-title">
-        Backed by <em>nature.</em>
-      </h2>
-      <p className="ingredients-sub">
-        Every ingredient chosen for purpose, dosed for results.
-      </p>
+      <div className="ingredients-container">
+        <p className="ingredients-eyebrow">Crafted With Intention</p>
+        <h2 className="ingredients-title">
+          Backed by <em>nature.</em>
+        </h2>
+        <p className="ingredients-sub">
+          Every ingredient chosen for purpose, dosed for results.
+        </p>
 
-      {variant === "couples" && (
-        <div className="ingredients-side-toggle">
-          <button
-            className={side === "her" ? "active" : ""}
-            onClick={() => setSide("her")}
-            type="button"
-          >
-            For Her
-          </button>
-          <button
-            className={side === "him" ? "active" : ""}
-            onClick={() => setSide("him")}
-            type="button"
-          >
-            For Him
-          </button>
+        {variant === "couples" && (
+          <div className="ingredients-side-toggle">
+            <button
+              className={side === "her" ? "active" : ""}
+              onClick={() => setSide("her")}
+              type="button"
+            >
+              For Her
+            </button>
+            <button
+              className={side === "him" ? "active" : ""}
+              onClick={() => setSide("him")}
+              type="button"
+            >
+              For Him
+            </button>
+          </div>
+        )}
+
+        <div className="ingredients-tabs">
+          {list.map((i) => (
+            <button
+              key={i.key}
+              type="button"
+              onClick={() => handleTab(i.key)}
+              className={`ingredient-tab ${activeKey === i.key ? "active" : ""}`}
+            >
+              {i.tab}
+            </button>
+          ))}
         </div>
-      )}
 
-      <div className="ingredients-tabs">
-        {list.map((i) => (
-          <button
-            key={i.key}
-            type="button"
-            onClick={() => handleTab(i.key)}
-            className={`ingredient-tab ${activeKey === i.key ? "active" : ""}`}
-          >
-            {i.tab}
-          </button>
-        ))}
-      </div>
-
-      <div className="ingredients-content" style={{ opacity: fade ? 1 : 0 }}>
-        <div className="ingredient-image">
-          <img src={active.img} alt={active.tab} loading="lazy" />
-        </div>
-        <div className="ingredient-text">
-          <div className="ingredient-meta">{active.meta}</div>
-          <h3 className="ingredient-name">{active.name}</h3>
-          <p className="ingredient-description">{active.description}</p>
-          <div className="ingredient-benefits">
-            {active.benefits.map((b) => (
-              <div key={b} className="ingredient-benefit">{b}</div>
-            ))}
+        <div className="ingredients-content" style={{ opacity: fade ? 1 : 0 }}>
+          <div className="ingredient-image-wrapper">
+            <img src={active.img} alt={active.tab} loading="lazy" />
+          </div>
+          <div className="ingredient-text">
+            <div className="ingredient-meta">{active.meta}</div>
+            <h3 className="ingredient-name">{active.name}</h3>
+            <p className="ingredient-description">{active.description}</p>
+            <div className="ingredient-divider" />
+            <div className="ingredient-benefits">
+              {active.benefits.map((b) => (
+                <div key={b} className="ingredient-benefit">{b}</div>
+              ))}
+            </div>
+            <div className="ingredient-source">{active.source}</div>
           </div>
         </div>
       </div>
