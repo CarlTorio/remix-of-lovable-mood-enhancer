@@ -10,6 +10,8 @@ import { Reveal } from "@/components/Reveal";
 import { setShopState, type ShopVariant } from "@/lib/shop-store";
 import { BundleBonusIndicator, BundleIncludesSection } from "@/components/shop/BundleBonus";
 import { IngredientsShowcase } from "@/components/shop/IngredientsShowcase";
+import { ProductStory } from "@/components/shop/ProductStory";
+import { useMagnetic } from "@/hooks/useMagnetic";
 
 import hero from "@/assets/hero.jpg";
 const forher = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMiAoMSkucG5nIiwiaWF0IjoxNzc3MTMyNzg2LCJleHAiOjE4MDg2Njg3ODZ9.B-AMqN_dXsCpMyXZQlOCFNt-OQtx30ikTNBNvzfd9Kk";
@@ -106,6 +108,7 @@ function ShopPage() {
       <Navbar />
       <main>
         <ProductTabs initial={variant} />
+        <ProductStory />
         <TrustAssurance />
         <HowToOrder />
         <MobileTestimonials />
@@ -312,6 +315,7 @@ function BottleStack({ src, count }: { src: string; count: number }) {
 function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Variant) => void }) {
   const cfg = getVariantConfig(variant);
   const { eyebrow, title, rating, reviews, description, mainImage, thumbnails, bundles, bottleImage } = cfg;
+  const checkoutRef = useMagnetic<HTMLAnchorElement>();
 
   const [active, setActive] = useState(mainImage);
   const defaultBundle = bundles.find((b) => b.badge === "BEST SELLER") ?? bundles[0];
@@ -710,9 +714,10 @@ function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Vari
 
           {/* CHECK OUT */}
           <Link
+            ref={checkoutRef}
             to="/checkout"
             search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-            className="lvb-checkout-btn btn-shine mt-6"
+            className="lvb-checkout-btn btn-shine magnetic-button mt-6"
           >
             <span>CHECK OUT</span>
             <span aria-hidden>🛒</span>
