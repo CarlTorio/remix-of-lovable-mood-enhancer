@@ -107,6 +107,7 @@ function ShopPage() {
       <Navbar />
       <main>
         <ProductTabs initial={variant} />
+        <ProductStory />
         <TrustAssurance />
         <HowToOrder />
         <MobileTestimonials />
