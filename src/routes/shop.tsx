@@ -315,6 +315,7 @@ function BottleStack({ src, count }: { src: string; count: number }) {
 function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Variant) => void }) {
   const cfg = getVariantConfig(variant);
   const { eyebrow, title, rating, reviews, description, mainImage, thumbnails, bundles, bottleImage } = cfg;
+  const checkoutRef = useMagnetic<HTMLAnchorElement>();
 
   const [active, setActive] = useState(mainImage);
   const defaultBundle = bundles.find((b) => b.badge === "BEST SELLER") ?? bundles[0];
