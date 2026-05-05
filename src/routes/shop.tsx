@@ -10,6 +10,7 @@ import { Reveal } from "@/components/Reveal";
 import { setShopState, type ShopVariant } from "@/lib/shop-store";
 import { BundleBonusIndicator, BundleIncludesSection } from "@/components/shop/BundleBonus";
 import { IngredientsShowcase } from "@/components/shop/IngredientsShowcase";
+import { ProductStory } from "@/components/shop/ProductStory";
 
 import hero from "@/assets/hero.jpg";
 const forher = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMiAoMSkucG5nIiwiaWF0IjoxNzc3MTMyNzg2LCJleHAiOjE4MDg2Njg3ODZ9.B-AMqN_dXsCpMyXZQlOCFNt-OQtx30ikTNBNvzfd9Kk";
