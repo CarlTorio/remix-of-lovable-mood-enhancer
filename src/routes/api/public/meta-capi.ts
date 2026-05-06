@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import "@tanstack/react-start";
 import { createHash } from "crypto";
 import { z } from "zod";
 

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import "@tanstack/react-start";
 import { z } from "zod";
 
 const PANCAKE_BASE = "https://pos.pages.fm/api/v1";
